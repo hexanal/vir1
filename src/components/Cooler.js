@@ -4,6 +4,8 @@ import useKeys from '../hooks/useKeys.js';
 import useRaf from '../hooks/useRaf.js';
 import { useControls }  from 'leva';
 
+import Graph from './Graph';
+
 function ctg(x) { return 1 / Math.tan(x); }
 
 function saw(n, L = 1) {
@@ -25,7 +27,7 @@ ClosePath: Z, z
 
 */
 
-export default function CoolBeans(props) {
+export default function Cooler(props) {
   const { rX, rY, rX2, rY2 } = useControls({
     rX: {
       value: 50,
@@ -68,6 +70,8 @@ export default function CoolBeans(props) {
     exponent,
     sawN,
     sawL,
+    showCircle,
+    showWaves,
   } = useControls({
     tFactor: {
       value: 5,
@@ -78,6 +82,8 @@ export default function CoolBeans(props) {
     exponent: 1,
     sawN: 1,
     sawL: 1,
+    showCircle: false,
+    showWaves: false,
   });
 
   useEffect( () => {
@@ -110,64 +116,43 @@ export default function CoolBeans(props) {
           left: '1rem',
         }}
       >
-        <pre>var1: {var1}</pre>
-        <pre>var2: {var2}</pre>
-        <pre>saw: {saw(sawN, sawL)}</pre>
-        <pre>saw value: {sawV}</pre>
+        hey dickhead!
       </div>
 
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        style={{
-          width: '100%',
-          height: '100%',
-          stroke: 'rgb(0 0 0 / 1)',
-          strokeWidth: '1px',
-        }}
-      >
-        <line
-          vectorEffect="non-scaling-stroke"
-          x1="0"
-          x2="100"
-          y1="50"
-          y2="50"
-        />
-        <line
-          vectorEffect="non-scaling-stroke"
-          x1="50"
-          x2="50"
-          y1="0"
-          y2="100"
-        />
+      <Graph>
+        {showCircle
+          ? (
+            <circle
+              vectorEffect="non-scaling-stroke"
+              cx="50"
+              cy={50 + sawV * 10}
+              r="1.5"
+              fill="rbg(255 0 255 / 1)"
+            />
+          )
+          : null}
 
-        <circle
-          vectorEffect="non-scaling-stroke"
-          cx="50"
-          cy={50 + sawV * 10}
-          r="1.5"
-          fill="rbg(255 0 255 / 1)"
-        />
-
-        {[
-          0,1,2,3,4,5,6,7,8,9,10,
-          11,12,13,14,15,16,17,18,19,20
-        ].map(n => (
-          <path
-            d={`
-            M 0,50
-            C ${rX},${rY + (var1*50) + n},${rX2},${rY2 + (var2*50) + n},100,50
-            z
-            `}
-            style={{
-              stroke: `rgb(0 0 0 / ${1 - (n * 0.05)})`,
-              fill: 'transparent',
-              vectorEffect: 'non-scaling-stroke',
-            }}
-          />
-        ))}
-      </svg>
+        {showWaves
+          ? [
+            0,1,2,3,4,5,6,7,8,9,10,
+            11,12,13,14,15,16,17,18,19,20
+          ].map(n => (
+            <path
+              d={`
+              M 0,50
+              C ${rX},${rY + (var1*50) + n},${rX2},${rY2 + (var2*50) + n},100,50
+              z
+              `}
+              style={{
+                stroke: `rgb(0 0 0 / ${1 - (n * 0.05)})`,
+                fill: 'transparent',
+                vectorEffect: 'non-scaling-stroke',
+              }}
+            />
+            )
+          )
+          : null}
+      </Graph>
     </div>
   );
 };

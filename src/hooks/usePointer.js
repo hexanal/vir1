@@ -48,8 +48,8 @@ export default function usePointer({
       // something like `use-gestures` returns; but I'm whipping my own
       const {
         position: previousPosition,
-        angle: previousAngle = 0,
-        delta: previousDelta = [0, 0],
+        // angle: previousAngle = 0,
+        // delta: previousDelta = [0, 0],
         displace: previousDisplace = [0, 0],
         distance: previousDistance = 0,
         changes: previousChanges = []
@@ -58,7 +58,6 @@ export default function usePointer({
 
       const deltaX = x - x0;
       const deltaY = y - y0;
-      const [prevDeltaX, prevDeltaY] = previousDelta || {};
       const delta = [deltaX, deltaY];
 
       const [prevDisplaceX, prevDisplaceY] = previousDisplace || {};
@@ -76,8 +75,8 @@ export default function usePointer({
       const angle = (theta * 180 / Math.PI).toFixed(3);
 
       // TODO experiment
-      const angleDelta = angle - previousAngle;
-      const angleChanged = angleDelta < 0;
+      // const angleDelta = angle - previousAngle;
+      // const angleChanged = angleDelta < 0;
       const distanceDelta = distance - previousDistance;
       const distanceChanged = distanceDelta < -2;
       const changes = distanceChanged ? [...previousChanges, {
@@ -98,7 +97,7 @@ export default function usePointer({
         changes,
       };
     }));
-  }, [setPointers, setMouse, origin]);
+  }, [setPointers, setMouse, origin, onCustomPointerMove]);
 
   const onPointerDown = useCallback(e => {
     // console.log({pointerdown: true, e});
@@ -106,14 +105,20 @@ export default function usePointer({
       onCustomPointerDown(e);
     }
 
-    const { pointerId, clientX, clientY, button = 0, pressedButtons = 0 } = e || {};
+    const {
+      pointerId,
+      clientX,
+      clientY,
+      // button = 0,
+      // pressedButtons = 0
+    } = e || {};
     const position = positionFromOrigin([clientX, clientY], origin);
 
     setPointers(p => [...p, {
       pointerId,
       position,
     }]);
-  }, [setPointers]);
+  }, [setPointers, onCustomPointerDown, origin]);
 
   const onPointerUp = useCallback(e => {
     // console.log({Pointerup: true, e});
@@ -121,7 +126,11 @@ export default function usePointer({
       onCustomPointerUp(e);
     }
 
-    const { pointerId, button = 0, buttons: pressedButtons = 0 } = e || {};
+    const {
+      pointerId,
+      // button = 0,
+      // buttons: pressedButtons = 0
+    } = e || {};
 
     setPointers(p => p.filter(o => o.pointerId !== pointerId));
 
@@ -132,7 +141,7 @@ export default function usePointer({
     // if (pressedButtons >= 3) {
     //   setButtons( pressedButtons.filter(b => b !== button) );
     // }
-  }, [setPointers]);
+  }, [setPointers, onCustomPointerUp]);
 
   useEffect(() => {
     document.addEventListener('pointermove', onPointerMove);

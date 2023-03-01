@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 
-export default function useMouse(config = {}) {
+// TODO: key repeat?
+export default function useKeys() {
   const [keys, setKeys] = useState([]);
 
   const onKeyDown = useCallback(e => {
