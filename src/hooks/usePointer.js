@@ -30,6 +30,8 @@ export default function usePointer({
       pointerId,
       clientX = 0,
       clientY = 0,
+      movementX = 0,
+      movementY = 0,
       pointerType
     } = e || {};
     const position = positionFromOrigin([clientX, clientY], origin);
@@ -70,9 +72,9 @@ export default function usePointer({
       const thetaFromCenter = Math.atan2(y, x).toFixed(3);
       const angleFromCenter = (thetaFromCenter * 180 / Math.PI).toFixed(3);
 
-      const distance = Math.sqrt( displace[0]**2 + displace[1]**2 ).toFixed(3);
-      const theta = Math.atan2(displace[1], displace[0]).toFixed(3);
-      const angle = (theta * 180 / Math.PI).toFixed(3);
+      const distance = Math.sqrt( displace[0]**2 + displace[1]**2 ).toFixed(3) * 1;
+      const theta = Math.atan2(displace[1], displace[0]).toFixed(3) * 1;
+      const angle = (theta * 180 / Math.PI).toFixed(3) * 1;
 
       // TODO experiment
       // const angleDelta = angle - previousAngle;
@@ -85,10 +87,13 @@ export default function usePointer({
         t: Date.now()
       }] : previousChanges;
 
+      const movement = [movementX, movementY];
+
       return {
         ...o,
         position,
         displace,
+        movement,
         distance,
         angle,
         distanceFromCenter,

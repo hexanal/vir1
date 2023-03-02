@@ -19,6 +19,7 @@ import C001 from './components/C001';
 import C002 from './components/C002';
 
 import TrajA from './components/TrajA';
+import TrajB from './components/TrajB';
 
 import Beansies from './components/Beansies';
 import CoolBeans from './components/CoolBeans';
@@ -46,6 +47,7 @@ export const routes = [
   { path: '/C001', element: <C001 />, },
   { path: '/C002', element: <C002 />, },
   { path: '/traj-a', element: <TrajA />, },
+  { path: '/traj-b', element: <TrajB />, },
   { path: '/datetime', element: <DateTime />, },
   { path: '/beansies', element: <Beansies />, },
   { path: '/cool-beans', element: <CoolBeans />, },

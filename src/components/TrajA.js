@@ -4,7 +4,10 @@ import useRaf from '../hooks/useRaf';
 import useKeys from '../hooks/useKeys';
 import useGamepads from '../hooks/useGamepads';
 import useFart from '../hooks/useFart';
+import usePointer from '../hooks/usePointer';
 import Graph from './Graph';
+import Scanner from './Scanner';
+import BiAxialScanner from './BiAxialScanner';
 
 export default function TrajA(props) {
   const {
@@ -14,7 +17,7 @@ export default function TrajA(props) {
     FORCE,
     MASS
   } = useControls({
-    SHOW_LOGS: true,
+    SHOW_LOGS: false,
     RED_BALL: true,
     YELLOW_BALL: true,
     MASS: {
@@ -36,6 +39,17 @@ export default function TrajA(props) {
   const { gamepads, getGamepadInputs } = useGamepads();
   const { rightStick = null, buttonDown = null } = getGamepadInputs(0) || {};
   const [xAxis = 0, yAxis = 0] = rightStick || [];
+  const { pointers, mouse } = usePointer();
+  const { position: mousePosition } = mouse || {};
+  const [mouseX = 0, mouseY = 0] = mousePosition || [];
+
+  function forceFromPointers(p) {
+    const primary = p[0];
+    const { position, displace } = primary || {};
+    const [x = 0, y = 0] = displace || [];
+
+    return [x, y];
+  }
 
   useEffect(() => {
     let nfx = 0;
@@ -58,8 +72,13 @@ export default function TrajA(props) {
     nfx += FORCE * (Math.abs(xAxis) < 0.05 ? 0 : xAxis);
     nfy += FORCE * (Math.abs(yAxis) < 0.05 ? 0 : yAxis);
 
+    const [pfx = 0, pfy = 0] = forceFromPointers(pointers);
+
+    nfx += pfx * 0.001;
+    nfy += pfy * 0.001;
+
     force.current = [nfx, nfy, nfz];
-  }, [keys, xAxis, yAxis, FORCE]);
+  }, [keys, xAxis, yAxis, pointers, FORCE]);
 
   const { position, eased } = useFart({ force: force.current, mass: MASS });
   const [x, y, z] = position || [];
@@ -79,62 +98,106 @@ export default function TrajA(props) {
   // const ly = f * Math.sin(theta);
 
   return (
-    <Graph>
-      {SHOW_LOGS ? (
-        <>
-          <text x={0} y={3} style={{fontSize: 2, stroke: 'none' }}>target: [{x}, {y}, {z}]</text>
-          <text x={0} y={6} style={{fontSize: 2, stroke: 'none' }}>eased: [{ex}, {ey}, {ez}]</text>
-          <text x={0} y={9} style={{fontSize: 2, stroke: 'none' }}>force: [{fx}, {fy}, {fz}]</text>
-          <text x={0} y={12} style={{fontSize: 2, stroke: 'none' }}>gamepad axes: [{xAxis}, {yAxis}]</text>
-        </>
-      ): null}
+    <div>
+      <pre style={{zIndex: 3, position: 'absolute', top: '1rem', left: '1rem', }}>
+        <code>gamepad x/y</code>
+        <BiAxialScanner
+          x={xAxis}
+          y={yAxis}
+          size={[3,3]}
+        />
 
-      {RED_BALL ? (
+        <code>force * FORCE</code>
+        <BiAxialScanner
+          x={fx * FORCE}
+          y={fy * FORCE}
+          size={[3,3]}
+        />
+
+        <code>mouse</code>
+        <BiAxialScanner
+          x={mouseX / window.innerWidth - 0.5}
+          y={mouseY / window.innerHeight - 0.5}
+          size={[3,3]}
+        />
+
+        <code>ex</code>
+        <Scanner
+          use={ex}
+          scaleFactor={0.1}
+          history={32}
+          size={[6,3]}
+        />
+        <code>ey</code>
+        <Scanner
+          use={ey}
+          scaleFactor={0.1}
+          history={32}
+          size={[6,3]}
+        />
+      </pre>
+
+      <Graph
+        style={{
+          height: '100%'
+        }}
+      >
+        {SHOW_LOGS ? (
+          <>
+            <text x={0} y={3} style={{fontSize: 2, stroke: 'none' }}>target: [{x}, {y}, {z}]</text>
+            <text x={0} y={6} style={{fontSize: 2, stroke: 'none' }}>eased: [{ex}, {ey}, {ez}]</text>
+            <text x={0} y={9} style={{fontSize: 2, stroke: 'none' }}>force: [{fx}, {fy}, {fz}]</text>
+            <text x={0} y={12} style={{fontSize: 2, stroke: 'none' }}>gamepad axes: [{xAxis}, {yAxis}]</text>
+          </>
+        ): null}
+
+        {RED_BALL ? (
+          <circle
+            cx={50 + x}
+            cy={50 + y}
+            r={5}
+            fill="rgb(255 0 0 / 1)"
+            stroke="none"
+            style={{
+              transform: `translateZ(${z}px)`
+            }}
+          />
+        ): null}
+
+        {YELLOW_BALL ? (
         <circle
-          cx={50 + x}
-          cy={50 + y}
-          r={5}
-          fill="rgb(255 0 0 / 1)"
+          cx={50 + ex}
+          cy={50 + ey}
+          r={2}
+          fill="rgb(255 255 0 / 1)"
           stroke="none"
           style={{
             transform: `translateZ(${z}px)`
           }}
         />
-      ): null}
+        ):null}
 
-      {YELLOW_BALL ? (
-      <circle
-        cx={50 + ex}
-        cy={50 + ey}
-        r={2}
-        fill="rgb(255 255 0 / 1)"
-        stroke="none"
-        style={{
-          transform: `translateZ(${z}px)`
-        }}
-      />
-      ):null}
+        <line
+          x1={x1}
+          y1={y1}
+          x2={x2 + (x2 - (50 + ex))}
+          y2={y2 + (y2 - (50 + ey))}
+          stroke="rgb(0 255 255 / 1)"
+          fill="none"
+          vectorEffect="non-scaling-stroke"
+        />
 
-      <line
-        x1={x1}
-        y1={y1}
-        x2={x2 + (x2 - (50 + ex))}
-        y2={y2 + (y2 - (50 + ey))}
-        stroke="rgb(0 255 255 / 1)"
-        fill="none"
-        vectorEffect="non-scaling-stroke"
-      />
-
-      <line
-        x1={x1}
-        y1={y1}
-        x2={x2}
-        y2={y2}
-        stroke="rgb(0 0 0 / 1)"
-        fill="none"
-        vectorEffect="non-scaling-stroke"
-      />
-    </Graph>
+        <line
+          x1={x1}
+          y1={y1}
+          x2={x2}
+          y2={y2}
+          stroke="rgb(0 0 0 / 1)"
+          fill="none"
+          vectorEffect="non-scaling-stroke"
+        />
+      </Graph>
+    </div>
   );
 };
 

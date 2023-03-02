@@ -1,6 +1,7 @@
 export default function Graph({
   withoutLines = false,
-  children
+  children,
+  style
 }) {
   return (
     <svg
@@ -12,6 +13,7 @@ export default function Graph({
         height: '100%',
         stroke: 'rgb(0 0 0 / 1)',
         strokeWidth: '1px',
+        ...style,
       }}
     >
       {!withoutLines ? (

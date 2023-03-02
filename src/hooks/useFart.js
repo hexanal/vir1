@@ -15,22 +15,25 @@ function useForce(props) {
   const velocity = useRef(0);
 
   useEffect(() => {
+
+
     const deltaFromForce = force !== 0
       ? Math.sqrt(Math.abs(force) / mass) * dt * (force > 0 ? 1 : -1)
       : 0;
     const next = n.current + deltaFromForce;
-    const diff = next - n0.current;
+    const diff = n.current - n0.current;
     const [step, newVelocity] = stepper({
       target: next,
       current: n.current,
       velocity: velocity.current,
     });
 
-    // console.table({step, newVelocity});
+    // console.table({diff});
 
     n0.current = n.current;
     n.current = next;
-    eased.current = step;
+    // eased.current = step;
+    eased.current = next;
   }, [t, dt, n, force, mass]);
 
   return [n.current, n0.current, eased.current];
