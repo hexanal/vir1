@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 
+// TODO split concerns per gamepad
+// + by button
 export default function useGamepads(config = {}) {
   const [gamepads, setGamepads] = useState(null);
 
