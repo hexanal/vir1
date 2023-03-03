@@ -12,6 +12,8 @@ function positionFromOrigin(position, origin) {
 
 export default function usePointer({
   origin = [0, 0],
+  min = [0, 0],
+  max = [100, 100],
   onPointerMove: onCustomPointerMove,
   onPointerDown: onCustomPointerDown,
   onPointerUp: onCustomPointerUp,
@@ -36,6 +38,10 @@ export default function usePointer({
     } = e || {};
     const position = positionFromOrigin([clientX, clientY], origin);
     const [x, y] = position || [];
+    const ratio = [
+      x / max[0],
+      y / max[1]
+    ];
 
     if (pointerType === 'mouse') {
       setMouse({
@@ -72,6 +78,8 @@ export default function usePointer({
       const thetaFromCenter = Math.atan2(y, x).toFixed(3);
       const angleFromCenter = (thetaFromCenter * 180 / Math.PI).toFixed(3);
 
+      const distanceRatioFromCenter = Math.sqrt( (1-ratio[0])**2 + (1-ratio[1])**2 ).toFixed(3);
+
       const distance = Math.sqrt( displace[0]**2 + displace[1]**2 ).toFixed(3) * 1;
       const theta = Math.atan2(displace[1], displace[0]).toFixed(3) * 1;
       const angle = (theta * 180 / Math.PI).toFixed(3) * 1;
@@ -92,11 +100,13 @@ export default function usePointer({
       return {
         ...o,
         position,
+        ratio,
         displace,
         movement,
         distance,
         angle,
         distanceFromCenter,
+        distanceRatioFromCenter,
         angleFromCenter,
         delta,
         changes,
@@ -122,6 +132,8 @@ export default function usePointer({
     setPointers(p => [...p, {
       pointerId,
       position,
+      start: [...position],
+      ratioStart: [position[0]/max[0], position[1]/max[1]],
     }]);
   }, [setPointers, onCustomPointerDown, origin]);
 

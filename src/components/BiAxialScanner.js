@@ -42,6 +42,7 @@ export default function BiAxialScanner(props) {
           history={history}
           linecolor={`rgb(0 255 255 / 0.5)`}
           size={size}
+          offset={50}
           style={{
             borderBottom: 0
           }}
@@ -70,6 +71,7 @@ export default function BiAxialScanner(props) {
           use={y}
           history={history}
           size={size}
+          offset={50}
           {...props}
         />
       </div>

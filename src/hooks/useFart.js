@@ -15,8 +15,6 @@ function useForce(props) {
   const velocity = useRef(0);
 
   useEffect(() => {
-
-
     const deltaFromForce = force !== 0
       ? Math.sqrt(Math.abs(force) / mass) * dt * (force > 0 ? 1 : -1)
       : 0;

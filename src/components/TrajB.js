@@ -71,9 +71,38 @@ export default function TrajA(props) {
       label: 'dots',
       component: (
         <Scanner
-          use={Math.sin(t * 0.01)}
+          use={20 * Math.sin(Math.tan(t * 0.002) * 0.01)}
+          offset={50}
+          size={[30,5]}
+          history={64}
+          indicator="dot"
+          withValue
+        />
+      )
+    },
+    {
+      label: 'dots (weirder)',
+      component: (
+        <Scanner
+          // use={Math.sin(t * 0.0025)}
+          use={0.5 * Math.sin(t * 0.007) * 1 / Math.cos(t * 0.001)}
+          offset={50}
           size={[10,3]}
-          history={8}
+          history={12}
+          indicator="dot"
+          withValue
+        />
+      )
+    },
+    {
+      label: 'dots',
+      component: (
+        <Scanner
+          // use={Math.sin(t * 0.0025)}
+          use={Math.cos(t * 0.004)}
+          offset={50}
+          size={[10,3]}
+          history={16}
           indicator="dot"
         />
       )
@@ -83,6 +112,7 @@ export default function TrajA(props) {
       component: (
         <Scanner
           use={Math.sin(t * 0.005)}
+          offset={50}
           size={[10,3]}
           history={64}
           indicator="wire"
@@ -94,6 +124,7 @@ export default function TrajA(props) {
       component: (
         <Scanner
           use={Math.sin(t * 0.005)}
+          offset={50}
           size={[10,3]}
           history={64}
         />

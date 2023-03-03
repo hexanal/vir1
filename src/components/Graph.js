@@ -1,7 +1,7 @@
 export default function Graph({
-  withoutLines = false,
   children,
-  style
+  style,
+  withoutLines = false,
 }) {
   return (
     <svg

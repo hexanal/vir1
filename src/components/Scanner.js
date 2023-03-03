@@ -3,6 +3,7 @@ import useRaf from '../hooks/useRaf';
 
 export default function Scanner(props) {
   const {
+    id = '—',
     size = [10,2],
     use = null,
     // TODO useHistory / use...Values
@@ -17,14 +18,15 @@ export default function Scanner(props) {
     origin = 0,// TODO
     offset = 0, // TODO
     indicator = 'bar', // TODO bar, point, cross, ...?
+    revert = false, // TODO
     withValue = false, // TODO
+    withLog = false, // TODO
     style = null,
-  } = props;
+  } = props || {};
   const start = useRef(Date.now());
   const v = useRef([]);
   const { t, dt, elapsed } = useRaf();
   const [width, height] = size;
-  // const ValueIndicator = 
 
   useEffect(() => {
     const newV = {
@@ -33,11 +35,15 @@ export default function Scanner(props) {
     };
     const { frame: lastFrame } = v.current[0] || {};
 
+    if (withLog) {
+      console.table(newV);
+    }
+
     if (t !== lastFrame) {
       v.current.unshift(newV);
       v.current = v.current.slice(0, history);
     }
-  }, [t, dt, elapsed, use, history]);
+  }, [t, dt, elapsed, use, history, withLog]);
 
   return (
     <div
@@ -48,7 +54,8 @@ export default function Scanner(props) {
         height: `${height}rem`,
         backgroundColor: `rgb(0 0 0 / 0.075)`,
         borderLeft: `1px solid rgb(0 0 0 / 1)`,
-        borderBottom: `1px solid rgb(0 0 0 / 1)`,
+        borderBottom: !revert ? `1px solid rgb(0 0 0 / 1)` : 0,
+        borderTop: revert ? `1px solid rgb(0 0 0 / 1)` : 0,
         ...style
       }}
     >
@@ -84,6 +91,7 @@ export default function Scanner(props) {
                       height: `4px`,
                       backgroundColor: linecolor,
                       transform: `
+                        translateY(${offset}%)
                         translate(-50%, -50%)
                         translateY(${height/2 * value * scaleFactor}rem)
                       `,
@@ -106,6 +114,7 @@ export default function Scanner(props) {
                       height: `1px`,
                       backgroundColor: linecolor,
                       transform: `
+                        translateY(${offset}%)
                         translateY(${height/2 * value * scaleFactor}rem)
                       `,
                       ...style
@@ -118,7 +127,6 @@ export default function Scanner(props) {
               {indicator === 'bar'
                 ? (
                   <div
-                    {...props}
                     style={{
                       position: 'absolute',
                       top: `0`,
@@ -128,7 +136,7 @@ export default function Scanner(props) {
                       backgroundColor: linecolor,
                       transformOrigin: '50% 0',
                       transform: `
-                        translateY(50%)
+                        translateY(${offset}%)
                         scaleY(${1 * value/2 * scaleFactor})
                       `,
                       ...style
@@ -141,21 +149,45 @@ export default function Scanner(props) {
         ))}
       </div>
 
-      <code
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: `100%`,
-          backgroundColor: `rgb(0 0 0 / 0.05)`,
-          padding: `0.2rem`,
-          fontSize: `0.5rem`,
-          transform: `
-            translateX(0.25rem)
-          `,
-        }}
-      >
-        {withValue ? use : ''}
-      </code>
+      {withValue
+        ? (
+          <code
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: `100%`,
+              backgroundColor: `rgb(0 0 0 / 0.05)`,
+              padding: `0.2rem`,
+              fontSize: `0.5rem`,
+              transform: `
+                translateX(0.1rem)
+              `,
+            }}
+          >
+            {use}
+          </code>
+        )
+      : null }
+
+      {scaleFactor !== 1
+        ? (
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: `100%`,
+              backgroundColor: `rgb(0 0 0 / 0.05)`,
+              padding: `0.2rem`,
+              fontSize: `0.5rem`,
+              transform: `
+                translateX(0.1rem)
+              `,
+            }}
+          >
+            &times;{scaleFactor}
+          </div>
+        )
+        : null}
     </div>
   );
 };
