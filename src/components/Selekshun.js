@@ -11,7 +11,7 @@ import Graph from './Graph';
 // import BiAxialScanner from './BiAxialScanner';
 // import BiAxialControls from './BiAxialControls';
 
-export default function TrajC(props) {
+export default function Selekshun(props) {
   const ref = useRef();
   const relativeTo = [
     ref.current ? ref.current.offsetWidth : 0,
@@ -28,8 +28,6 @@ export default function TrajC(props) {
   const { keys } = useKeys();
 
   const [tool, setTool] = useState('select');
-
-  // console.log(relx, rely);
 
   const {
     position,

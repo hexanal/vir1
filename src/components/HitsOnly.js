@@ -29,74 +29,114 @@ export default function HitsOnly(props) {
   const { size, rect } = useSize({
     ref
   });
+  const what = useRef([0, 0]);
+
+  useEffect(() => {
+    const fuck = ref.current ? ref.current.getBoundingClientRect() : null;
+    const { x: elx, y: ely } = fuck || {};
+    what.current = [elx, ely];
+  }, [rect]);
 
   useEffect(() => {
     if (x && y) {
-      const { left, width, top, height } = rect || {};
-      // const hx = 
-      hit.current = [x / width * 100 - left / 100, y / height * 100 - top / 100];
+      const [offsetX, offsetY] = what.current;
+      const { width, height } = rect || {};
+      // console.log(what.current);
+      // const offsetX = (window.innerWidth - width) / 2;
+      const diffX = x - offsetX;
+      const ratioX = diffX / width;
+
+      // const offsetY = (window.innerHeight - height) / 2;
+      const diffY = y - offsetY;
+      const ratioY = diffY / height;
+
+      hit.current = [ratioX * 100, ratioY * 100];
     }
-  }, [x, y, rect]);
+  }, [x, y]);
 
   return (
-    <div ref={ref} style={{display: 'flex', height: '100%', justifyContent: 'center'
-    }}>
-      <Graph style={{width: 'auto', height: '100%'}}>
-        {rect !== null ? (
-          <text
-            x={51}
-            y={1}
-            stroke="none"
-            style={{font: '1px monospace'}}
-          >
-            {rect.width}, {rect.height}
-          </text>
-        ):null}
-
-        {hit.current !== null ? (
-          <text
-            x={51}
-            y={3}
-            stroke="none"
-            style={{font: '1px monospace'}}
-          >
-            {hit.current[0]}, {hit.current[1]}
-          </text>
-        ):null}
-
+    <div
+      ref={ref}
+      style={{
+        position: 'absolute',
+        bottom: '1rem',
+        right: '1rem',
+        width: '50%',
+        // height: '20%',
+        cursor: x && y ? 'crosshair' : 'default'
+      }}
+    >
+    <Graph
+      style={{
+        cursor: x && y ? 'crosshair' : 'default'
+      }}
+    >
+      {rect !== null ? (
         <text
-          x={1}
+          x={51}
           y={1}
           stroke="none"
           style={{font: '1px monospace'}}
         >
-          experiment: where did I touch you?
+          {rect.width}, {rect.height}
         </text>
+      ):null}
 
-        {hit.current ? (
-          <>
-            <circle
-              cx={hit.current[0]}
-              cy={hit.current[1]}
-              r={1.5}
-              fill="rgb(0 0 255 / 1)"
-              stroke="none"
-              style={{
-                transform: `translate(-50, -50%)`
-              }}
-            />
-            <text
-              x={hit.current[0] + 2}
-              y={hit.current[1] + 0.5}
-              stroke="none"
-              style={{font: '1px monospace'}}
-            >
-              here
-            </text>
-          </>
-        ): null}
+      {hit.current !== null ? (
+        <text
+          x={51}
+          y={3}
+          stroke="none"
+          style={{font: '1px monospace'}}
+        >
+          {hit.current[0]}, {hit.current[1]}
+        </text>
+      ):null}
 
-      </Graph>
+      {x && y  ? (
+        <text
+          x={30}
+          y={3}
+          stroke="none"
+          style={{font: '1px monospace'}}
+        >
+          {x}, {y}
+        </text>
+      ):null}
+
+      <text
+        x={1}
+        y={1}
+        stroke="none"
+        style={{font: '1px monospace'}}
+      >
+        experiment: where did I touch you?
+      </text>
+
+      {hit.current ? (
+        <>
+          <circle
+            cx={hit.current[0]}
+            cy={hit.current[1]}
+            r={1.5}
+            fill="rgb(0 0 255 / 1)"
+            stroke="none"
+            style={{
+              transform: `translate(-50, -50%)`
+            }}
+          />
+          <text
+            x={hit.current[0] + 2}
+            y={hit.current[1] + 0.5}
+            stroke="none"
+            style={{font: '1px monospace'}}
+          >
+            here
+          </text>
+        </>
+      ): null}
+
+    </Graph>
     </div>
   );
 };

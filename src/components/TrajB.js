@@ -13,7 +13,7 @@ import BiAxialControls from './BiAxialControls';
 const FORCE = 0.005;
 const MASS = 84;
 
-export default function TrajA(props) {
+export default function TrajB(props) {
   const force = useRef([0, 0, 0]);
   const { keys } = useKeys();
   const { gamepads, getGamepadInputs } = useGamepads();

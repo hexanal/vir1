@@ -12,7 +12,8 @@ export default function useSize({
       const resizeObserver = new ResizeObserver((entries) => {
         for (const entry of entries) {
           const { contentRect } = entry || {};
-
+          const { x, y, width, height } = contentRect || {};
+          console.log({x,y});
           rect.current = contentRect;
         }
       });

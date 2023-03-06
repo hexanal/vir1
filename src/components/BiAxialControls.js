@@ -6,44 +6,60 @@ export default function BiAxialControls(props) {
   const {
     // x = 0,
     // y = 0,
+    multiplier = 1,
     size = [3, 3],
+    onChange,
+    withSnapBack = false,
   } = props || {};
   const s = size[0];
+  const interact = useRef(false);
   const ref = useRef(null);
   const coords = useRef([0,0]);
 
+  const { pointers } = usePointer();
+  const interacting = typeof pointers[0] !== 'undefined';
+
   const onPointerDown = useCallback(() => {
+    interact.current = true;
     ref.current.requestPointerLock({
       unadjustedMovement: true,
     });
   }, []);
-  const onPointerMove = useCallback(() => {
-    console.log('scan it some more');
-  }, []);
-  const onPointerUp = useCallback(() => {
-    console.log('scan it not no more');
-    document.exitPointerLock();
-  }, []);
+  const onPointerMove = useCallback((e) => {
+    interact.current = interacting;
 
-  const { pointers } = usePointer();
-  // const { pointers } = usePointer({
-  // });
-  // const { mouse: mousePosition } = mouse || {};
+    if (!interacting && withSnapBack) {
+      coords.current = [0, 0];
+    }
+  }, [pointers]);
+  const onPointerUp = useCallback(() => {
+    interact.current = false;
+
+    if (withSnapBack) {
+      coords.current = [0, 0];
+    }
+    document.exitPointerLock();
+  }, [pointers]);
 
   useEffect(() => {
+    if (!interact.current) return;
+
     const primary = pointers[0];
     const { position, displace, movement } = primary || {};
     const [dx = 0, dy = 0] = movement || [];
     const alphaX = 1 / window.innerWidth;
     const alphaY = 1 / window.innerHeight;
-    const beta = 0.85;
 
     coords.current = [
-      primary ? coords.current[0] + dx * alphaX * beta : 0,
-      primary ? coords.current[1] + dy * alphaY * beta : 0,
+      primary ? coords.current[0] + dx * alphaX * multiplier : 0,
+      primary ? coords.current[1] + dy * alphaY * multiplier : 0,
     ];
 
-  }, [pointers]);
+    if (typeof onChange === 'function') {
+      onChange(coords.current);
+    }
+
+  }, [pointers, onChange, multiplier]);
 
   return (
     <div
@@ -59,9 +75,10 @@ export default function BiAxialControls(props) {
       }}
     >
       <BiAxialScanner
-        x={coords.current[0]}
-        y={coords.current[1]}
+        x={coords.current[0] / multiplier}
+        y={coords.current[1] / multiplier}
         size={size}
+        withValue
         {...props}
       />
     </div>

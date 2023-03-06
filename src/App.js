@@ -22,7 +22,11 @@ import TrajA from './components/TrajA';
 import TrajB from './components/TrajB';
 import TrajC from './components/TrajC';
 import Selekshun from './components/Selekshun';
+import SomeControls from './components/SomeControls';
 import HitsOnly from './components/HitsOnly';
+
+import DanceMofo from './components/DanceMofo';
+import TheCanvas from './components/TheCanvas';
 
 import Beansies from './components/Beansies';
 import CoolBeans from './components/CoolBeans';
@@ -53,6 +57,9 @@ export const routes = [
   { path: '/traj-b', element: <TrajB />, },
   { path: '/traj-c', element: <TrajC />, },
   { path: '/selekshun', element: <Selekshun />, },
+  { path: '/some-controls', element: <SomeControls />, },
+  { path: '/dance-mofo', element: <DanceMofo />, },
+  { path: '/the-canvas', element: <TheCanvas />, },
   { path: '/hits-only', element: <HitsOnly />, },
   { path: '/datetime', element: <DateTime />, },
   { path: '/beansies', element: <Beansies />, },

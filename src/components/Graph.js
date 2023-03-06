@@ -1,10 +1,16 @@
-export default function Graph({
-  children,
-  style,
-  withoutLines = false,
-}) {
+import { forwardRef } from 'react';
+
+const GraphWithRef = forwardRef(function Graph(
+  {
+    children,
+    style,
+    withoutLines = false,
+  },
+  ref
+) {
   return (
     <svg
+      ref={ref}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 100 100"
       // preserveAspectRatio="none"
@@ -25,5 +31,6 @@ export default function Graph({
       {children}
     </svg>
   );
-};
+});
 
+export default GraphWithRef;

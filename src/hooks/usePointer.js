@@ -78,7 +78,7 @@ export default function usePointer({
       const thetaFromCenter = Math.atan2(y, x).toFixed(3);
       const angleFromCenter = (thetaFromCenter * 180 / Math.PI).toFixed(3);
 
-      const distanceRatioFromCenter = Math.sqrt( (1-ratio[0])**2 + (1-ratio[1])**2 ).toFixed(3);
+      const distanceRatioFromCenter = parseFloat(Math.sqrt( (1-ratio[0])**2 + (1-ratio[1])**2 ).toFixed(3));
 
       const distance = Math.sqrt( displace[0]**2 + displace[1]**2 ).toFixed(3) * 1;
       const theta = Math.atan2(displace[1], displace[0]).toFixed(3) * 1;

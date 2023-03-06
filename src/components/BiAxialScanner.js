@@ -5,7 +5,8 @@ export default function BiAxialScanner(props) {
     x = 0,
     y = 0,
     size = [3, 3],
-    history = 8
+    history = 8,
+    ...otherProps
   } = props || {};
   const s = size[0];
 
@@ -46,7 +47,7 @@ export default function BiAxialScanner(props) {
           style={{
             borderBottom: 0
           }}
-          {...props}
+          {...otherProps}
         />
       </div>
 
@@ -72,7 +73,7 @@ export default function BiAxialScanner(props) {
           history={history}
           size={size}
           offset={50}
-          {...props}
+          {...otherProps}
         />
       </div>
     </div>

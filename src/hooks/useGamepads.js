@@ -2,6 +2,27 @@ import { useState, useCallback, useEffect } from 'react';
 
 // TODO split concerns per gamepad
 // + by button
+// split all buttons in props
+//  up
+//  down
+//  left
+//  right
+//  start
+//  select
+//  pad
+//  ...
+//   a: 0
+//   b: 1 for e.g.
+//   x: 0
+//   y: 0
+//   rightStickAxisX
+//   rightStickAxisY
+//   leftStickAxisX
+//   leftStickAxisY
+//   R2 : 0->1
+//   L2 : 0->1
+//   R1
+//   L1
 export default function useGamepads(config = {}) {
   const [gamepads, setGamepads] = useState(null);
 
