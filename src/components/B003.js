@@ -32,25 +32,25 @@ export default function B003(props) {
   } = useControls({
     ORIGIN: [50, 50],
     POINTS: {
-      value: 1,
+      value: 512,
       min: 0,
-      max: 255,
+      max: 1024,
       step: 1,
     },
-    ALPHA: norm(),
+    ALPHA: norm(0.02),
     BETA: norm(),
     GAMMA: norm(),
-    EPSILON: norm(),
-    THETA: norm(),
+    EPSILON: norm(-0.4),
+    THETA: norm(-0.15),
     SCALE: {
       min: 0.1,
       max: 100,
-      value: 1,
+      value: 25,
       step: 0.1,
     }
   });
 
-  // const { t, dt, elapsed } = useRaf();
+  const { t, dt, elapsed } = useRaf();
 
   const { pointers, mouse, active } = usePointer({
     origin: [window.innerWidth / 2, window.innerHeight / 2]
@@ -104,23 +104,23 @@ export default function B003(props) {
     const foo = n => n + Math.cos(n * THETA);
     const coolShit = n => n + Math.cos(n * THETA);
 
-
     // const ly = reset(normalized(loga(n, { freq: ALPHA, amplitude: BETA * 10 })));
     // const ly = reset(normalized(curved(n)));
     // const ly = reset(normalized(foo(fucked(n))));
     const ly = reset(normalized(coolShit(n)));
 
     return ly;
-  }, [POINTS, SCALE, THETA, ALPHA, BETA, GAMMA, EPSILON, ORIGIN]);
+  }, [POINTS, SCALE, THETA, ALPHA, BETA, GAMMA, EPSILON, ORIGIN, t]);
 
   const d2 = useMemo( () => {
     const [originX, originY] = ORIGIN;
     let str = `M ${originX},${originY}`;
+    const angleProgress = t * 0.007;
 
     for (let i = 0; i <= POINTS; i++) {
       const r = (i * ALPHA) + BETA * THETA;
-      const lx = originX + r * Math.cos(i * THETA) * SCALE;
-      const ly = originY + r * Math.sin(i * THETA) * SCALE;
+      const lx = originX + r * Math.cos(i * THETA + angleProgress) * SCALE;
+      const ly = originY + r * Math.sin(i * THETA + angleProgress) * SCALE;
 
       str += `
         L ${lx},${ly}

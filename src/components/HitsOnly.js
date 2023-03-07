@@ -12,6 +12,8 @@ import Graph from './Graph';
 // import BiAxialScanner from './BiAxialScanner';
 // import BiAxialControls from './BiAxialControls';
 
+// TODO to a hook / hookify
+// blah blah
 export default function HitsOnly(props) {
   const ref = useRef();
   const { t } = useRaf();
@@ -25,28 +27,24 @@ export default function HitsOnly(props) {
   const { position, } = pointers[0] || [];
   const [x, y] = position || [];
 
+  const bounds = useRef([0, 0]);
   const hit = useRef([0, 0]);
-  const { size, rect } = useSize({
-    ref
-  });
-  const what = useRef([0, 0]);
+  const { size, rect } = useSize({ ref });
 
   useEffect(() => {
-    const fuck = ref.current ? ref.current.getBoundingClientRect() : null;
-    const { x: elx, y: ely } = fuck || {};
-    what.current = [elx, ely];
+    const b = ref.current ? ref.current.getBoundingClientRect() : null;
+    const { x: elx, y: ely } = b || {};
+    bounds.current = [elx, ely];
   }, [rect]);
 
   useEffect(() => {
     if (x && y) {
-      const [offsetX, offsetY] = what.current;
+      const [offsetX, offsetY] = bounds.current;
       const { width, height } = rect || {};
-      // console.log(what.current);
-      // const offsetX = (window.innerWidth - width) / 2;
+      // TODO 4d-ify [x,y,z,t]
+      // n-dimensional
       const diffX = x - offsetX;
       const ratioX = diffX / width;
-
-      // const offsetY = (window.innerHeight - height) / 2;
       const diffY = y - offsetY;
       const ratioY = diffY / height;
 
