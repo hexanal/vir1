@@ -35,6 +35,8 @@ import DateTime from './experiments/DateTime';
 import IndexPage from './experiments/IndexPage';
 import MoveThree from './experiments/MoveThree';
 
+import Growing from './experiments/Growing';
+
 export const routes = [
   { path: '/', element: <IndexPage />, },
   { path: '/A001', element: <A001 />, },
@@ -66,5 +68,6 @@ export const routes = [
   { path: '/move-three', element: <MoveThree />, },
   { path: '/again-controls', element: <AgainControls />, },
   { path: '/messy-controls', element: <MessyControls />, },
+  { path: '/growing', element: <Growing />, },
 ];
 
