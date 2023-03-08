@@ -8,3 +8,12 @@ polar coordinates
   to cartesian coordinates
     & others
   and back
+
+[time]
+put things in timeline
+  move with time
+  define timescale (how much history to show)
+    speed at which events will show
+  direction
+    from left or from right?
+

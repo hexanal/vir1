@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect, useRef } from 'react';
 
 function positionFromOrigin(position, origin) {
     const [x, y] = position;
@@ -13,12 +13,12 @@ function positionFromOrigin(position, origin) {
 export default function usePointer({
   origin = [0, 0],
   min = [0, 0],
-  max = [100, 100],
+  max = [window.innerWidth, window.innerHeight],
   onPointerMove: onCustomPointerMove,
   onPointerDown: onCustomPointerDown,
   onPointerUp: onCustomPointerUp,
 } = {}) {
-  const [pointers, setPointers] = useState([]);
+  const pointers = useRef({});
   const [mouse, setMouse] = useState(null);
   // current position
   // barycenter / center of mass
@@ -49,70 +49,70 @@ export default function usePointer({
       });
     }
 
-    setPointers(p => p.map(o => {
-      if (o.pointerId !== pointerId) return o;
+    const previous = pointers.current[pointerId];
+    // TODO this is where I'm basically recreating the object that
+    // something like `use-gestures` returns; but I'm whipping my own
+    const {
+      position: previousPosition,
+      // angle: previousAngle = 0,
+      // delta: previousDelta = [0, 0],
+      displace: previousDisplace = [0, 0],
+      distance: previousDistance = 0,
+      changes: previousChanges = []
+    } = previous || {};
+    const [x0, y0] = previousPosition || [];
 
-      // TODO this is where I'm basically recreating the object that
-      // something like `use-gestures` returns; but I'm whipping my own
-      const {
-        position: previousPosition,
-        // angle: previousAngle = 0,
-        // delta: previousDelta = [0, 0],
-        displace: previousDisplace = [0, 0],
-        distance: previousDistance = 0,
-        changes: previousChanges = []
-      } = o || {};
-      const [x0, y0] = previousPosition || {};
+    const deltaX = x - x0;
+    const deltaY = y - y0;
+    const delta = [deltaX, deltaY];
 
-      const deltaX = x - x0;
-      const deltaY = y - y0;
-      const delta = [deltaX, deltaY];
+    const [prevDisplaceX, prevDisplaceY] = previousDisplace || {};
+    const displace = [
+      prevDisplaceX + deltaX,
+      prevDisplaceY + deltaY,
+    ];
 
-      const [prevDisplaceX, prevDisplaceY] = previousDisplace || {};
-      const displace = [
-        prevDisplaceX + deltaX,
-        prevDisplaceY + deltaY,
-      ];
+    const distanceFromCenter = Math.sqrt( y**2 + x**2 ).toFixed(3);
+    const thetaFromCenter = Math.atan2(y, x).toFixed(3);
+    const angleFromCenter = (thetaFromCenter * 180 / Math.PI).toFixed(3);
 
-      const distanceFromCenter = Math.sqrt( y**2 + x**2 ).toFixed(3);
-      const thetaFromCenter = Math.atan2(y, x).toFixed(3);
-      const angleFromCenter = (thetaFromCenter * 180 / Math.PI).toFixed(3);
+    const distanceRatioFromCenter = parseFloat(Math.sqrt( (1-ratio[0])**2 + (1-ratio[1])**2 ).toFixed(3));
 
-      const distanceRatioFromCenter = parseFloat(Math.sqrt( (1-ratio[0])**2 + (1-ratio[1])**2 ).toFixed(3));
+    const distance = Math.sqrt( displace[0]**2 + displace[1]**2 ).toFixed(3) * 1;
+    const theta = Math.atan2(displace[1], displace[0]).toFixed(3) * 1;
+    const angle = (theta * 180 / Math.PI).toFixed(3) * 1;
 
-      const distance = Math.sqrt( displace[0]**2 + displace[1]**2 ).toFixed(3) * 1;
-      const theta = Math.atan2(displace[1], displace[0]).toFixed(3) * 1;
-      const angle = (theta * 180 / Math.PI).toFixed(3) * 1;
+    // TODO experiment
+    // const angleDelta = angle - previousAngle;
+    // const angleChanged = angleDelta < 0;
+    const distanceDelta = distance - previousDistance;
+    const distanceChanged = distanceDelta < -2;
+    const changes = distanceChanged ? [...previousChanges, {
+      distance,
+      position,
+      t: Date.now()
+    }] : previousChanges;
 
-      // TODO experiment
-      // const angleDelta = angle - previousAngle;
-      // const angleChanged = angleDelta < 0;
-      const distanceDelta = distance - previousDistance;
-      const distanceChanged = distanceDelta < -2;
-      const changes = distanceChanged ? [...previousChanges, {
-        distance,
-        position,
-        t: Date.now()
-      }] : previousChanges;
+    const movement = [movementX, movementY];
 
-      const movement = [movementX, movementY];
+    const pointer = {
+      ...previous,
+      position,
+      ratio,
+      displace,
+      movement,
+      distance,
+      angle,
+      distanceFromCenter,
+      distanceRatioFromCenter,
+      angleFromCenter,
+      delta,
+      changes,
+    };
 
-      return {
-        ...o,
-        position,
-        ratio,
-        displace,
-        movement,
-        distance,
-        angle,
-        distanceFromCenter,
-        distanceRatioFromCenter,
-        angleFromCenter,
-        delta,
-        changes,
-      };
-    }));
-  }, [setPointers, setMouse, origin, onCustomPointerMove]);
+    pointers.current[pointerId] = pointer;
+
+  }, [setMouse, origin, onCustomPointerMove]);
 
   const onPointerDown = useCallback(e => {
     // console.log({pointerdown: true, e});
@@ -128,14 +128,26 @@ export default function usePointer({
       // pressedButtons = 0
     } = e || {};
     const position = positionFromOrigin([clientX, clientY], origin);
+    const previous = pointers.current[pointerId] || [];
 
-    setPointers(p => [...p, {
-      pointerId,
+    // TODO this is where I'm basically recreating the object that
+    // something like `use-gestures` returns; but I'm whipping my own
+    // const {
+    //   position: previousPosition,
+    //   // angle: previousAngle = 0,
+    //   // delta: previousDelta = [0, 0],
+    //   displace: previousDisplace = [0, 0],
+    //   distance: previousDistance = 0,
+    //   changes: previousChanges = []
+    // } = previous || {};
+
+    pointers.current[pointerId] = {
+      ...previous,
       position,
       start: [...position],
       ratioStart: [position[0]/max[0], position[1]/max[1]],
-    }]);
-  }, [setPointers, onCustomPointerDown, origin]);
+    };
+  }, [onCustomPointerDown, origin]);
 
   const onPointerUp = useCallback(e => {
     // console.log({Pointerup: true, e});
@@ -149,7 +161,9 @@ export default function usePointer({
       // buttons: pressedButtons = 0
     } = e || {};
 
-    setPointers(p => p.filter(o => o.pointerId !== pointerId));
+    if (pointerId !== 0) {
+      delete pointers.current[pointerId];
+    }
 
     // if (pressedButtons === 0) {
     //   setButtons([]);
@@ -158,7 +172,7 @@ export default function usePointer({
     // if (pressedButtons >= 3) {
     //   setButtons( pressedButtons.filter(b => b !== button) );
     // }
-  }, [setPointers, onCustomPointerUp]);
+  }, [onCustomPointerUp]);
 
   useEffect(() => {
     document.addEventListener('pointermove', onPointerMove);
@@ -173,7 +187,7 @@ export default function usePointer({
   }, [onPointerMove, onPointerDown, onPointerUp]);
 
   return {
-    pointers,
+    pointers: pointers.current,
     mouse,
   };
 }

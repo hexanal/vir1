@@ -13,7 +13,6 @@ export default function useSize({
         for (const entry of entries) {
           const { contentRect } = entry || {};
           const { x, y, width, height } = contentRect || {};
-          console.log({ x, y });
           rect.current = contentRect;
         }
       });
