@@ -24,6 +24,8 @@ export default function Scanner(props) {
     scaleFactor = 1,
     linecolor = 'rgb(255 0 255 / 1)',
     label = null,
+    min = 0,
+    max = 1,
     origin = 0,// TODO
     offset = 0, // TODO
     indicator = 'bar', // TODO bar, point, cross, ...?

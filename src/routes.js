@@ -21,6 +21,7 @@ import Selekshun from './experiments/Selekshun';
 import SomeControls from './experiments/SomeControls';
 import AgainControls from './experiments/AgainControls';
 import MessyControls from './experiments/MessyControls';
+import EvenMoreControls from './experiments/EvenMoreControls';
 import HitsOnly from './experiments/HitsOnly';
 
 import DanceMofo from './experiments/DanceMofo';
@@ -68,6 +69,7 @@ export const routes = [
   { path: '/move-three', element: <MoveThree />, },
   { path: '/again-controls', element: <AgainControls />, },
   { path: '/messy-controls', element: <MessyControls />, },
+  { path: '/even-more-controls', element: <EvenMoreControls />, },
   { path: '/growing', element: <Growing />, },
 ];
 
