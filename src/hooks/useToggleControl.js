@@ -9,15 +9,8 @@ export default function useToggleControl(props) {
   const [value, setValue] = useState(initial);
 
   const onValueChange = useCallback(() => {
-    console.log('uh?');
     setValue(val => !val);
   }, [setValue]);
-
-  // TODO?
-  // useEffect(() => {
-  //   onValueChange(initial);
-  // }, [initial]);
-  // console.log('uh');
 
   const control = useMemo(() => {
     return p => (

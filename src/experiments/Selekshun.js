@@ -35,11 +35,12 @@ export default function Selekshun(props) {
   const [x, y] = position || [];
   const [dx, dy] = displace || [];
 
-  const startHit = useRef(null);
   const { hit } = useCollision({
     ref,
     cursor: [x, y]
   });
+
+  const startHit = useRef(null);
   const selected = useRef(null);
   const selection = useRef(null);
 

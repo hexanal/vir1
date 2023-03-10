@@ -34,7 +34,8 @@ export default function usePointer({
       clientY = 0,
       movementX = 0,
       movementY = 0,
-      pointerType
+      pointerType,
+      buttons = null,
     } = e || {};
     const position = positionFromOrigin([clientX, clientY], origin);
     const [x, y] = position || [];
@@ -46,6 +47,7 @@ export default function usePointer({
     if (pointerType === 'mouse') {
       setMouse({
         position: [x, y],
+        buttons,
       });
     }
 
@@ -108,6 +110,8 @@ export default function usePointer({
       angleFromCenter,
       delta,
       changes,
+
+      buttons,
     };
 
     pointers.current[pointerId] = pointer;
@@ -115,7 +119,6 @@ export default function usePointer({
   }, [setMouse, origin, onCustomPointerMove]);
 
   const onPointerDown = useCallback(e => {
-    // console.log({pointerdown: true, e});
     if (typeof onCustomPointerDown === 'function') {
       onCustomPointerDown(e);
     }
@@ -124,12 +127,10 @@ export default function usePointer({
       pointerId,
       clientX,
       clientY,
-      // button = 0,
-      // pressedButtons = 0
+      buttons,
     } = e || {};
     const position = positionFromOrigin([clientX, clientY], origin);
     const previous = pointers.current[pointerId] || [];
-
     // TODO this is where I'm basically recreating the object that
     // something like `use-gestures` returns; but I'm whipping my own
     // const {
@@ -146,19 +147,17 @@ export default function usePointer({
       position,
       start: [...position],
       ratioStart: [position[0]/max[0], position[1]/max[1]],
+      buttons // TODO
     };
   }, [onCustomPointerDown, origin]);
 
   const onPointerUp = useCallback(e => {
-    // console.log({Pointerup: true, e});
     if (typeof onCustomPointerUp === 'function') {
       onCustomPointerUp(e);
     }
 
     const {
       pointerId,
-      // button = 0,
-      // buttons: pressedButtons = 0
     } = e || {};
 
     if (pointerId !== 0) {

@@ -38,6 +38,8 @@ import MoveThree from './experiments/MoveThree';
 
 import Growing from './experiments/Growing';
 import GrowingTaller from './experiments/GrowingTaller';
+import Positioning from './experiments/Positioning';
+import SizeUp from './experiments/SizeUp';
 
 export const routes = [
   { path: '/', element: <IndexPage />, },
@@ -73,5 +75,7 @@ export const routes = [
   { path: '/even-more-controls', element: <EvenMoreControls />, },
   { path: '/growing', element: <Growing />, },
   { path: '/growing-taller', element: <GrowingTaller />, },
+  { path: '/positioning', element: <Positioning />, },
+  { path: '/size-up', element: <SizeUp />, },
 ];
 
