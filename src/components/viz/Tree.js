@@ -67,7 +67,6 @@ export default function Tree(props) {
           height: '1rem',
           // borderRadius: '50%',
           overflow: 'hidden',
-
           backgroundColor,
         }}
       >

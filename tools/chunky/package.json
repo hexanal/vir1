@@ -1,0 +1,14 @@
+{
+    "name": "chunky",
+    "description": "gettin' chunky wit it",
+    "version": "0.0.0-alpha42",
+    "type": "module",
+    "scripts": {
+      "start": "echo 'hello'"
+    },
+    "main": "index.js",
+    "dependencies": {
+      "uuid": "^8.3.2",
+      "react-dom": "18.1.0"
+    }
+}
