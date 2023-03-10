@@ -35,9 +35,6 @@ export default function useFaderControl(props) {
     );
   }, [label, min, max, step, onValueChange]);
 
-  return {
-    value,
-    control
-  };
+  return [value, control];
 }
 

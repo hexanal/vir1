@@ -14,40 +14,28 @@ export default function MessyControls(props) {
   const { t } = useRaf();
   const { keys } = useKeys();
 
-  const {
-    value: testValue,
-    control: ScannerTestValueControl,
-  } = useFaderControl({
+  const [testValue, ScannerTestValueControl] = useFaderControl({
     label: 'Scanner test value',
     value: 0.5,
     min: 0,
     max: 1,
     step: 0.01,
   });
-  const {
-    value: scannerWidth,
-    control: ScannerWidthControl,
-  } = useFaderControl({
+  const [scannerWidth, ScannerWidthControl] = useFaderControl({
     label: 'Scanner width',
     value: 10,
     min: 1,
     max: 100,
     step: 0.5,
   });
-  const {
-    value: scannerHeight,
-    control: ScannerHeightControl,
-  } = useFaderControl({
+  const [scannerHeight, ScannerHeightControl] = useFaderControl({
     label: 'Scanner height',
     value: 2,
     min: 1,
     max: 100,
     step: 0.5,
   });
-  const {
-    value: scannerOffset,
-    control: ScannerOffsetControl,
-  } = useFaderControl({
+  const [scannerOffset, ScannerOffsetControl] = useFaderControl({
     label: 'Scanner offset',
     value: 100,
     min: -100,
@@ -56,10 +44,7 @@ export default function MessyControls(props) {
   });
 
   // RECURSE!!!
-  const {
-    value: fuck,
-    control: ScannerFuck,
-  } = useFaderControl({
+  const [fuck, ScannerFuck] = useFaderControl({
     label: 'Scanner fuckery',
     value: 512,
     min: 16,
@@ -67,10 +52,7 @@ export default function MessyControls(props) {
     step: 8,
   });
 
-  const {
-    value: scannerHistory,
-    control: ScannerHistoryControl,
-  } = useFaderControl({
+  const [scannerHistory, ScannerHistoryControl] = useFaderControl({
     label: 'Scanner history snapshots',
     value: 64,
     min: 8,

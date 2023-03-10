@@ -13,7 +13,7 @@ export default function useRaf(fn = false) {
 
     setT(t1);
     dt.current = delta;
-    elapsed.current = t1 - t0;
+    elapsed.current = t1 - t0.current;
 
     if (typeof fn === 'function') {
       fn({

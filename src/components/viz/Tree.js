@@ -3,14 +3,18 @@
 
 export default function Tree(props) {
   const {
+    node,
+    config, // TODO
+    onClickNode = null,
+  } = props || {};
+  const {
     id,
     label,
     depth = 0,
     subIndex = 0,
     siblings = 0,
     children = [],
-    config, // TODO
-  } = props || {};
+  } = node || {};
   const {
     spacingX = 1, // n-dimensional TODO
     spacingY = 1,
@@ -59,10 +63,9 @@ export default function Tree(props) {
           margin: `0 1rem`,
           padding: `0.5rem`,
           border: `1px solid rgb(0 0 0 / 0.25)`,
-
-          width: '1rem',
+          width: '5rem',
           height: '1rem',
-          borderRadius: '50%',
+          // borderRadius: '50%',
           overflow: 'hidden',
 
           backgroundColor,
@@ -75,7 +78,16 @@ export default function Tree(props) {
             lineHeight: 1,
           }}
         >
-          {label}
+          {onClickNode !== null
+            ? (
+              <button
+                type="button"
+                onClick={() => onClickNode(node)}
+              >
+                {label}
+              </button>
+            )
+            : label}
         </div>
       </div>
 
@@ -96,14 +108,18 @@ y: ${y} `}</pre>
       <div>
         {children.map((c,i) => {
           const { id } = c || {};
+          const childNode = {
+            ...c,
+            subIndex: i,
+            depth: depth + 1,
+            siblings: children.length,
+          };
           return (
             <Tree
-              {...c}
               key={id}
-              subIndex={i}
-              depth={depth + 1}
-              siblings={children.length}
+              node={childNode}
               config={config}
+              onClickNode={() => onClickNode(childNode)}
               // parent?!!?!?
             />
           );

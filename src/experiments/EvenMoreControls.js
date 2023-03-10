@@ -18,32 +18,50 @@ export default function EvenMoreControls(props) {
     setSnapshots(val);
   }, [setSnapshots]);
 
-  const {
-    value: sizeX,
-    control: SizeXFader,
-  } = useFaderControl({
+  const [sizeX, SizeXFader] = useFaderControl({
     label: 'size x',
     value: 10,
     min: 1,
     max: 20,
     step: 0.5,
   });
-  const {
-    value: sizeY,
-    control: SizeYFader,
-  } = useFaderControl({
+  const [sizeY, SizeYFader] = useFaderControl({
     label: 'size y',
     value: 2,
     min: 1,
     max: 20,
     step: 0.5,
   });
+  const [minY, MinYFader] = useFaderControl({
+    label: 'min y',
+    value: 0,
+    min: -100,
+    max: 100,
+    step: 1,
+  });
+  const [minX, MinXFader] = useFaderControl({
+    label: 'min x',
+    value: 0, min: -100, max: 100, step: 1,
+  });
+  const [originX, OriginXFader] = useFaderControl({
+    label: 'origin x',
+    value: 0, min: -100, max: 100, step: 1,
+  });
+  const [originY, OriginYFader] = useFaderControl({
+    label: 'origin y',
+    value: 100, min: -100, max: 100, step: 1,
+  });
+  const [maxX, MaxXFader] = useFaderControl({
+    label: 'max x',
+    value: 100, min: -100, max: 100, step: 1,
+  });
+  const [maxY, MaxYFader] = useFaderControl({
+    label: 'max y',
+    value: 100, min: -100, max: 100, step: 1,
+  });
 
-  const {
-    value: offset,
-    control: OffsetFader,
-  } = useFaderControl({
-    label: 'offset',
+  const [offset, OffsetFader] = useFaderControl({
+    label: 'offset value',
     value: 100,
     min: 0,
     max: 100,
@@ -63,15 +81,21 @@ export default function EvenMoreControls(props) {
         <OffsetFader />
         <SizeXFader />
         <SizeYFader />
+        <MinXFader />
+        <MinYFader />
+        <MaxXFader />
+        <MaxYFader />
+        <OriginXFader />
+        <OriginYFader />
 
         <GraphScanner
           size={[sizeX, sizeY]}
           label={`keys`}
-          min={[0, 0]}
-          max={[100, 100]}
-          origin={[0, 100]}
+          min={[minX, minY]}
+          max={[maxX, maxY]}
+          origin={[originX, originY]}
           use={keys.length * -1 * 20}
-          history={64}
+          history={256}
           colors={{
             indicator: `rgb(0 255 128 / 1` // TODO hmm..
           }}

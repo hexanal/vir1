@@ -4,7 +4,8 @@ const GraphWithRef = forwardRef(function Graph(
   {
     children,
     style,
-    size = [3,3],
+    // size = [3,3],
+    size = null,
     origin = [0, 100],
     max = [100, 100],
     min = [0, 0],
@@ -24,10 +25,10 @@ const GraphWithRef = forwardRef(function Graph(
       ref={ref}
       xmlns="http://www.w3.org/2000/svg"
       viewBox={`0 0 100 100`}
-      preserveAspectRatio="none"
+      preserveAspectRatio={size === null ? 'all' : 'none'}
       style={{
-        width: `${sx}rem`,
-        height: `${sy}rem`,
+        width: size === null ? '100%' : `${sx}rem` ,
+        height: size === null ? '100%' : `${sy}rem`,
         stroke: 'rgb(0 0 0 / 1)',
         strokeWidth: '1px',
         ...style,

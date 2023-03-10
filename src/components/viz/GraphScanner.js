@@ -27,7 +27,7 @@ export default function GraphScanner(props) {
     min = [0, 0],
     max = [100, 100],
     origin = [0, 100],
-    indicator = 'bar', // TODO bar, point, cross, ...?
+    indicator = 'wire', // TODO bar, point, cross, ...?
     style = null,
     graphStyle = null,
   } = props || {};
@@ -102,12 +102,17 @@ export default function GraphScanner(props) {
         min={min}
         max={max}
       >
-        <path
-          d={d(t)}
-          stroke="rgb(255 128 128 / 1)"
-          fill="none"
-          vectorEffect="non-scaling-stroke"
-        />
+        {indicator === 'wire' || indicator === 'line'
+          ? (
+            <path
+              d={d(t)}
+              stroke="rgb(255 0 0 / 1)"
+              // fill="rgb(255 0 0 / 1)"
+              fill="transparent"
+              vectorEffect="non-scaling-stroke"
+            />
+          ): null
+        }
       </Graph>
     </div>
   );

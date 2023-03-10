@@ -37,6 +37,7 @@ import IndexPage from './experiments/IndexPage';
 import MoveThree from './experiments/MoveThree';
 
 import Growing from './experiments/Growing';
+import GrowingTaller from './experiments/GrowingTaller';
 
 export const routes = [
   { path: '/', element: <IndexPage />, },
@@ -71,5 +72,6 @@ export const routes = [
   { path: '/messy-controls', element: <MessyControls />, },
   { path: '/even-more-controls', element: <EvenMoreControls />, },
   { path: '/growing', element: <Growing />, },
+  { path: '/growing-taller', element: <GrowingTaller />, },
 ];
 

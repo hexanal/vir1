@@ -1,4 +1,5 @@
 import { useCallback, useState, useEffect, useRef } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 // import useRaf from '../hooks/useRaf';
 // import useKeys from '../hooks/useKeys';
 // import useGamepads from '../hooks/useGamepads';
@@ -10,7 +11,63 @@ import { useCallback, useState, useEffect, useRef } from 'react';
 import useFaderControl from '../hooks/useFaderControl';
 import Tree from '../components/viz/Tree';
 
-const tree = {
+/**
+ * E X P E R I M E N T I N G
+ *
+ */
+const DICT = [
+  'hello', 'world', 'foo', 'bar', 'baz', 'lol',
+  'dog', 'cat', 'weasel', 'donkey', 'horse', 'platypus',
+  'giraffe', 'chimpanzee', 'gorilla', 'lion', 'jellyfish', 'octopus',
+];
+
+function randomInt(lowest, highest) {
+  const min = Math.ceil(lowest);
+  const max = Math.floor(highest);
+
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
+function randomPick(arr) {
+  return arr[randomInt(0, arr.length)];
+}
+
+function randomWord() {
+  return randomPick(DICT);
+}
+
+/**
+ * < / E X P E R I M E N T I N G >
+ */
+
+function randomTree({
+  nodes = 0,
+  id = 'root',
+  label = 'root',
+  children = [],
+}) {
+  let tree = {
+    id,
+    label,
+    children,
+  };
+
+  for (let i = 0; i <= nodes; i++) {
+    const subId = uuidv4();
+    const subLabel = `${randomWord()}_${randomWord()}`;
+    const sub = randomTree({
+      nodes: randomInt(0, nodes), // TODO
+      id: subId,
+      label: subLabel,
+    });
+
+    tree.children.push(sub);
+  }
+
+  return tree;
+}
+
+const initialTree = {
   id: 'root',
   label: '×',
   children: [
@@ -61,31 +118,23 @@ const tree = {
 };
 
 export default function Growing(props) {
+  const [tree, setTree] = useState(initialTree);
   // NOTE could be [offset2, Offset2Fader] = ...
-  const {
-    value: spacingX,
-    control: SpacingXFader,
-  } = useFaderControl({
+  const [spacingX, SpacingXFader] = useFaderControl({
     label: 'Horizontal spacing',
     value: 1,
     min: 0.5,
     max: 2,
     step: 0.01,
   });
-  const {
-    value: spacingY,
-    control: SpacingYFader,
-  } = useFaderControl({
+  const [spacingY, SpacingYFader] = useFaderControl({
     label: 'Vertical spacing',
     value: 2,
     min: -5,
     max: 5,
     step: 0.05,
   });
-  const {
-    value: depthScaling,
-    control: DepthScalingFader,
-  } = useFaderControl({
+  const [depthScaling, DepthScalingFader] = useFaderControl({
     label: 'Scaling',
     value: 1,
     min: 0.5,
@@ -93,11 +142,35 @@ export default function Growing(props) {
     step: 0.01,
   });
 
+  const onClickAddNode = useCallback(e => {
+    setTree(prevTree => {
+      const { children } = prevTree || {}
+
+      return {
+        ...prevTree,
+        children: [
+          ...children,
+          {
+            id: uuidv4(),
+            label: '𝞳',
+          }
+        ]
+      }
+    });
+  }, [setTree]);
+
   return (
     <div>
       <SpacingXFader />
       <SpacingYFader />
       <DepthScalingFader />
+
+      <button
+        type="button"
+        onClick={onClickAddNode}
+      >
+        Add node
+      </button>
 
 <pre
   style={{
@@ -128,7 +201,7 @@ wishlist:
         }}
       >
         <Tree
-          {...tree}
+          node={tree}
           config={{
             spacingX,
             spacingY,
