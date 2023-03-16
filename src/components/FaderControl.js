@@ -2,7 +2,8 @@ import { useCallback, useState } from 'react';
 
 export default function FaderControl(props) {
   const {
-    label = '—',
+    label = '—', // NOTE deprecated
+    unit = null,
     min = 0,
     max = 100,
     step = 1,
@@ -30,17 +31,6 @@ export default function FaderControl(props) {
         display: 'inline-block',
       }}
     >
-      <div
-        style={{
-          backgroundColor: 'rgb(0 0 0 / 0.05)',
-          border: `1px solid rgb(0 0 0 / 0.5)`,
-          borderBottom: 0,
-        }}
-      >
-        <label>
-          {label}
-        </label>
-      </div>
 
       <div
         style={{
@@ -61,19 +51,20 @@ export default function FaderControl(props) {
           {current}
         </div>
 
-        <div
-          style={{
-            display: 'none',
-            // display: 'flex', // TODO
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '1.5rem',
-            color: 'rgb(255 255 255 / 1)',
-            backgroundColor: 'rgb(0 0 0 / 1)',
-          }}
-        >
-          px
-        </div>
+        {unit !== null ? (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              padding: '0 0.5rem',
+              backgroundColor: 'rgb(0 0 0 / 0.05)',
+              borderTop: `1px solid rgb(0 0 0 / 0.5)`,
+              borderBottom: `1px solid rgb(0 0 0 / 0.5)`,
+            }}
+          >
+            {unit}
+          </div>
+        ): null}
         <div
           style={{
             display: 'flex',

@@ -68,10 +68,10 @@ export default function usePointer({
     const deltaY = y - y0;
     const delta = [deltaX, deltaY];
 
-    const [prevDisplaceX, prevDisplaceY] = previousDisplace || {};
+    const [prevDisplaceX = 0, prevDisplaceY = 0] = previousDisplace || {};
     const displace = [
-      prevDisplaceX + deltaX,
-      prevDisplaceY + deltaY,
+      deltaX ? prevDisplaceX + deltaX : 0,
+      deltaY ? prevDisplaceY + deltaY : 0,
     ];
 
     const distanceFromCenter = Math.sqrt( y**2 + x**2 ).toFixed(3);
