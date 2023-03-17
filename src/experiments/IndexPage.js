@@ -7,6 +7,9 @@ export default function IndexPage(props) {
       style={{
         paddingLeft: 0,
         margin: 0,
+        overflowX: 'hidden',
+        overflowY: 'auto',
+        height: '100%',
       }}
     >
       {routes.map((r,i) => {

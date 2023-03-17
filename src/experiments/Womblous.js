@@ -198,6 +198,8 @@ export default function Womblous(props) {
       <Graph
         ref={ref}
         style={{
+          width: 'auto',
+          height: '100%',
           ...graphStyle,
         }}
         withoutLines

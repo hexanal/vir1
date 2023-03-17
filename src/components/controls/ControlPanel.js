@@ -13,11 +13,12 @@ export default function ControlPanel(props) {
   const {
     style = null,
     children = null,
+    hidden = true,
   } = props || {};
 
   const [debug, DebugToggle] = useToggleControl({
     label: "DEBUG",
-    value: false,
+    value: !hidden,
   });
 
   return (

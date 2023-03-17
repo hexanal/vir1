@@ -39,20 +39,38 @@ export default function useGamepads(config = {}) {
     const pressed = buttons.map(b => b.pressed);
 
     // triggers
-    const leftTrigger = buttons[6] ? buttons[6].value : 0;
-    const rightTrigger = buttons[7] ? buttons[7].value : 0;
+    const triggerL2 = buttons[6] ? buttons[6].value : 0;
+    const triggerR2 = buttons[7] ? buttons[7].value : 0;
+
+    // TODO debuggerrr
+    // console.log(pressed.reduce((acc,b,i) => {
+    //   return b ? `${acc}, ${i}` : acc;
+    // }, -1));
 
     return {
       leftStick,
       rightStick,
 
-      leftTrigger,
-      rightTrigger,
+      triggerL2,
+      triggerR2,
 
-      buttonUp: pressed[3], // triangle
-      buttonDown: pressed[0], // x
-      buttonLeft: pressed[2], // square
-      buttonRight: pressed[1], // circle
+      buttonL1: pressed[4],
+      buttonR1: pressed[5],
+
+      dpadUp: pressed[12],
+      dpadDown: pressed[13],
+      dpadLeft: pressed[14],
+      dpadRight: pressed[15],
+
+      buttonY: pressed[3], // PS4 -> triangle
+      buttonX: pressed[2], // PS4 -> square
+      buttonB: pressed[1], // PS4 -> circle
+      buttonA: pressed[0], // PS4 -> x
+
+      select: pressed[8], // PS4 -> share
+      start: pressed[9], // PS4 -> options
+      pad: pressed[17], // PS4 -> touch pad
+      power: pressed[16], // PS4 -> PS button
     };
   }, [gamepads]);
 
