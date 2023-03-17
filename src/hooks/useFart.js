@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect, useRef } from 'react';
 import useRaf from './useRaf';
-import stepper from '../stepper';
+import stepper from '../utils/stepper';
 
 function useForce(props) {
   const {

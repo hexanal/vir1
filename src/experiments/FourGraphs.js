@@ -17,6 +17,7 @@ import GraphAxes from '../components/viz/GraphAxes';
 import TimeGraph from './TimeGraph';
 import DessinGraph from './DessinGraph';
 import MoveGraph from './MoveGraph';
+import Wiggley from './Wiggley';
 
 export default function FourGraphs(props) {
   const { t, elapsed } = useRaf();
@@ -33,6 +34,9 @@ export default function FourGraphs(props) {
     min: 0,
     max: 100,
   });
+  const onContextMenu = useCallback(e => {
+    e.preventDefault();
+  }, []);
 
   return (
     <div
@@ -44,6 +48,7 @@ export default function FourGraphs(props) {
         width: '100%',
         height: '100%',
       }}
+      onContextMenu={onContextMenu}
     >
       {/* <TimeGraph /> */}
       <DessinGraph
@@ -79,7 +84,7 @@ export default function FourGraphs(props) {
         }}
       />
 
-      <MoveGraph
+      <Wiggley
          graphStyle={{
            position: 'absolute',
            bottom: 0,

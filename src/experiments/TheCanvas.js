@@ -9,25 +9,7 @@ import usePointer from '../hooks/usePointer';
 import useFaderControl from '../hooks/useFaderControl';
 import useToggleControl from '../hooks/useToggleControl';
 
-function grid({
-  cols,
-  rows,
-  processor = n => n
-}) {
-  let items = [];
-
-  for (let i = 0; i <= rows; i++) {
-    for(let j = 0; j <= cols; j++) {
-      const coords = [i, j];
-      items.push({
-        coords,
-        value: processor(coords)
-      });
-    }
-  }
-
-  return items;
-}
+import grid from '../utils/grid';
 
 function wave({ A, lambda, x, v, t, }) {
   const wa = A * Math.sin(t * lambda * v) + x;

@@ -1,4 +1,5 @@
 import { useCallback, useState, useEffect, useRef } from 'react';
+import useDebounce from './useDebounce';
 
 function positionFromOrigin(position, origin) {
     const [x, y] = position;
@@ -18,8 +19,8 @@ export default function usePointer({
   onPointerDown: onCustomPointerDown,
   onPointerUp: onCustomPointerUp,
 } = {}) {
-  const pointers = useRef({});
-  const [mouse, setMouse] = useState(null);
+  // const pointers = useRef({});
+  const [pointers, setPointers] = useState([]);
   // current position
   // barycenter / center of mass
 
@@ -44,14 +45,8 @@ export default function usePointer({
       y / max[1]
     ];
 
-    if (pointerType === 'mouse') {
-      setMouse({
-        position: [x, y],
-        buttons,
-      });
-    }
-
-    const previous = pointers.current[pointerId];
+    // const previous = pointers.current[pointerId];
+    const previous = pointers[pointerId] || [];
     // TODO this is where I'm basically recreating the object that
     // something like `use-gestures` returns; but I'm whipping my own
     const {
@@ -68,7 +63,7 @@ export default function usePointer({
     const deltaY = y - y0;
     const delta = [deltaX, deltaY];
 
-    const [prevDisplaceX = 0, prevDisplaceY = 0] = previousDisplace || {};
+    const [prevDisplaceX, prevDisplaceY] = previousDisplace || {};
     const displace = [
       deltaX ? prevDisplaceX + deltaX : 0,
       deltaY ? prevDisplaceY + deltaY : 0,
@@ -113,10 +108,17 @@ export default function usePointer({
 
       buttons,
     };
+    const newPointers = pointers.map((p,i) => {
+      if (i === pointerId) {
+        return pointer;
+      }
+      return p;
+    });
 
-    pointers.current[pointerId] = pointer;
+    setPointers(newPointers);
 
-  }, [setMouse, origin, onCustomPointerMove]);
+  }, [pointers, setPointers, origin, onCustomPointerMove]);
+  // }, [origin, onCustomPointerMove]);
 
   const onPointerDown = useCallback(e => {
     if (typeof onCustomPointerDown === 'function') {
@@ -130,7 +132,8 @@ export default function usePointer({
       buttons,
     } = e || {};
     const position = positionFromOrigin([clientX, clientY], origin);
-    const previous = pointers.current[pointerId] || [];
+    const previous = pointers[pointerId] || [];
+    // const previous = pointers.current[pointerId] || [];
     // TODO this is where I'm basically recreating the object that
     // something like `use-gestures` returns; but I'm whipping my own
     // const {
@@ -142,14 +145,21 @@ export default function usePointer({
     //   changes: previousChanges = []
     // } = previous || {};
 
-    pointers.current[pointerId] = {
+    // pointers.current[pointerId] = {
+    const newPointer = {
       ...previous,
       position,
       start: [...position],
       ratioStart: [position[0]/max[0], position[1]/max[1]],
       buttons // TODO
     };
-  }, [onCustomPointerDown, origin]);
+
+    setPointers(p => {
+      p[pointerId] = newPointer;
+      return p;
+    });
+
+  }, [pointers, setPointers, onCustomPointerDown, origin]);
 
   const onPointerUp = useCallback(e => {
     if (typeof onCustomPointerUp === 'function') {
@@ -160,8 +170,14 @@ export default function usePointer({
       pointerId,
     } = e || {};
 
+    // if (pointerId !== 0) {
+    //   delete pointers.current[pointerId];
+    // }
     if (pointerId !== 0) {
-      delete pointers.current[pointerId];
+      setPointers(p => {
+        delete p[pointerId];
+        return p;
+      });
     }
 
     // if (pressedButtons === 0) {
@@ -171,7 +187,7 @@ export default function usePointer({
     // if (pressedButtons >= 3) {
     //   setButtons( pressedButtons.filter(b => b !== button) );
     // }
-  }, [onCustomPointerUp]);
+  }, [pointers, setPointers, onCustomPointerUp]);
 
   useEffect(() => {
     document.addEventListener('pointermove', onPointerMove);
@@ -186,8 +202,8 @@ export default function usePointer({
   }, [onPointerMove, onPointerDown, onPointerUp]);
 
   return {
-    pointers: pointers.current,
-    mouse,
+    pointers,
+    // pointers: pointers.current,
   };
 }
 

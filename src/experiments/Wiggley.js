@@ -32,7 +32,7 @@ function smoothstep(x, a, b) {
   return x * (b - a) + a;
 }
 
-export default function MoveGraph(props) {
+export default function Wiggley(props) {
   const {
     style = null,
     graphStyle = null,
@@ -46,8 +46,22 @@ export default function MoveGraph(props) {
     label: '𝜁',
     value: 0.5,
     min: 0.0,
-    max: 1,
+    max: 5,
     step: 0.01,
+  });
+  const [AMPLITUDE, AmplitudeFader] = useFaderControl({
+    label: 'Amplitude',
+    value: 1.5,
+    min: 0,
+    max: 10,
+    step: 0.1,
+  });
+  const [TESSELS, TesselationFader] = useFaderControl({
+    label: 'Tessalation',
+    value: 16,
+    min: 0,
+    max: 64,
+    step: 1,
   });
 
   const points = useRef([{
@@ -62,8 +76,6 @@ export default function MoveGraph(props) {
     coords: [x, y]
   });
   const [hitX = 0 , hitY = 0] = hit || [];
-
-  const TESSELS = 4;
   const pan = useRef([0, 0]);
   const [panX = 50, panY = 50] = pan.current || [];
   const adding = useRef(false);
@@ -76,35 +88,27 @@ export default function MoveGraph(props) {
     const [nx, ny] = nextCoords || [];
     const [px, py] = prevCoords || [];
 
-    if (nextCoords === null || prevCoords === null) {
-      return false;
-    }
+    if (nextCoords === null || prevCoords === null) return false;
 
+    const LAMBDA = 2;
+    const X_ST = 200;
+    const Y_ST = 100;
     let path = '';
-
-    // TODO one type...
-    // for (let i = 1; i < TESSELS; i++) {
-    //   const type = i > 1 ? 'L' : 'M';
-    //   const lx = lerp(px, nx, i);
-    //   const ly = lerp(py, ny, i);
-
-    //   console.table({lx, ly, px, py, nx, ny});
-
-    //   path += `
-    //     ${type} ${lx},${ly}
-    //   `;
-    // }
     for (let i = 0; i <= TESSELS; i++) {
       const type = i > 0 ? 'L' : 'M';
 
-      const noisex = Math.sin(t * 0.005 + i) * 3;
-      const noisey = Math.cos(t * 0.005 + i) * 3;
+      const noisex = Math.cos(t * 0.007 * ZETA + i) * AMPLITUDE;
+      const noisey = Math.sin(t * 0.007 * ZETA + i) * AMPLITUDE;
+      const wavex2 = Math.sin(t * 0.007 * LAMBDA + i + X_ST * i) * AMPLITUDE;
+      const wavey2 = Math.cos(t * 0.007 * LAMBDA + i + Y_ST * i) * AMPLITUDE;
 
       const dx = sherp(i / TESSELS, px, nx);
       const dy = sherp(i / TESSELS, py, ny);
 
-      const lx = dx + noisex;
-      const ly = dy + noisey;
+      const motionx = i > 0 ? dx + noisex + wavex2 : px;
+      const motiony = i > 0 ? dy + noisey + wavey2 : py;
+      const lx = i === TESSELS ? nx : motionx;
+      const ly = i === TESSELS ? ny : motiony;
 
       path += `
         ${type} ${lx},${ly}
@@ -112,26 +116,23 @@ export default function MoveGraph(props) {
     }
 
     return path;
-  }, [t]);
+  // }, [t, ZETA, TESSELS, AMPLITUDE, X_ST, Y_ST, LAMBDA]);
+  }, [t, ZETA, TESSELS, AMPLITUDE]);
 
   useEffect( () => {
     // TODO experiment...
-    adding.current = ADDING_BINDINGS[buttons];
-
     if (buttons === 1 && isInside) {
-      points.current[1] = {
+      points.current.push({
         id: uuidv4(),
         fuck: 'maybe',
         coords: [hit[0], hit[1], 0, t]
-      }
+      })
     }
+
 
     if (buttons === 2 && isInside) {
       pan.current = hit;
-      // console.table(displace[0], displace[1]);
-      // console.table(displace[0], displace[1]);
     }
-    // points.current[latestIndex.current] = [lx, ly, 0, elapsed];
   }, [displace, isInside, buttons]);
 
   return (
@@ -149,6 +150,8 @@ export default function MoveGraph(props) {
         }}
       >
         <ZetaFader />
+        <TesselationFader />
+        <AmplitudeFader />
       </ControlPanel>
 
       <Graph
@@ -262,10 +265,10 @@ export default function MoveGraph(props) {
           const { id, coords } = p || {};
           const [cx, cy, z, frame] = coords || [];
 
-          const { coords: previousCoords } = points.current[i - 1] || {};
-          const [previousX, previousY] = previousCoords || [];
+          // const { coords: previousCoords } = points.current[i - 1] || {};
+          // const [previousX, previousY] = previousCoords || [];
 
-          const tesselations = getTess([cx, cy], [previousX, previousY]);
+          const tesselations = getTess([cx, cy], [0, 0]);
 
           return (
             <Fragment key={id}>
@@ -274,6 +277,7 @@ export default function MoveGraph(props) {
                   d={tesselations}
                   stroke={`rgb(0 0 0 /1)`}
                   fill={`none`}
+                  vectorEffect={`non-scaling-stroke`}
                 />
               ): null}
 

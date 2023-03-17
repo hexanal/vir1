@@ -5,10 +5,10 @@ import useSize from './useSize';
 export default function useCollision(props) {
   const {
     ref = null,
-    cursor = null,
+    coords = null,
   } = props || {};
 
-  const [x = 0, y = 0] = cursor || [];
+  const [x = 0, y = 0] = coords || [];
   const bounds = useRef([0, 0]);
   const hit = useRef([0, 0]);
   const isInside = useRef(false);

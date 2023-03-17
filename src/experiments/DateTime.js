@@ -1,6 +1,7 @@
 import { useCallback, useState, useEffect, useRef } from 'react';
 import { Leva, useControls } from 'leva';
 import useRaf from '../hooks/useRaf';
+import useKeys from '../hooks/useKeys';
 import Logger from '../components/viz/Logger';
 
 function Boom(props) {
@@ -11,6 +12,13 @@ function Boom(props) {
     bgColor = '#000000',
     style = {}
   } = props || {};
+
+  // const { keys } = useKeys();
+  // useEffect(() => {
+  //   if( keys.includes('a') ) {
+      
+  //   }
+  // }, [keys]);
 
   return (
     <div style={{
@@ -55,6 +63,7 @@ export default function DateTime(props) {
     YEAR_FORMAT,
     FONT_FAMILY,
     LOWERCASE,
+    MESSAGE,
   } = useControls({
     LOWERCASE: true,
     FONT_FAMILY: {
@@ -113,6 +122,7 @@ export default function DateTime(props) {
         '2-digit',
       ],
     },
+    MESSAGE: 'dev sesh— codename virulent',
   });
 
   const { t, t0, elapsed }  = useRaf();
@@ -133,6 +143,18 @@ export default function DateTime(props) {
   });
   const timestring = date.toLocaleTimeString('en-US');
 
+  const [controlsHidden, setControlsHidden] = useState(true);
+  const { keys } = useKeys();
+
+  useEffect(() => {
+    if( keys.includes('a') ) {
+      setControlsHidden(true);
+    }
+    if( keys.includes('s') ) {
+      setControlsHidden(false);
+    }
+  }, [keys, setControlsHidden]);
+
   return (
     <div
       className=""
@@ -149,7 +171,7 @@ export default function DateTime(props) {
     >
       <Leva
         // theme={myTheme} // you can pass a custom theme (see the styling section)
-        hidden // default = false, when true the GUI is hidden
+        hidden={controlsHidden} // default = false, when true the GUI is hidden
       />
 
       <Boom
@@ -175,6 +197,19 @@ export default function DateTime(props) {
         }}
       >
         {datestring}
+      </Boom>
+
+      <Boom
+        fontSize={FONT_SIZE * 0.7}
+        fontColor={FONT_COLOR}
+        bgColor={BG_COLOR}
+        style={{
+          left: 0,
+          right: 'auto',
+          textTransform: LOWERCASE ? 'lowercase' : 'none'
+        }}
+      >
+        {MESSAGE}
       </Boom>
     </div>
   );

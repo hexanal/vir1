@@ -41,6 +41,7 @@ import GrowingTaller from './experiments/GrowingTaller';
 import Positioning from './experiments/Positioning';
 import SizeUp from './experiments/SizeUp';
 import FourGraphs from './experiments/FourGraphs';
+import Womblous from './experiments/Womblous';
 
 export const routes = [
   { path: '/', element: <IndexPage />, },
@@ -79,5 +80,6 @@ export const routes = [
   { path: '/positioning', element: <Positioning />, },
   { path: '/size-up', element: <SizeUp />, },
   { path: '/4-graphs', element: <FourGraphs />, },
+  { path: '/womb', element: <Womblous />, },
 ];
 

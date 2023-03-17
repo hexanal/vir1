@@ -31,7 +31,7 @@ export default function DessinGraph(props) {
   const ref = useRef(null);
   const { hit } = useCollision({
     ref,
-    cursor: [x, y]
+    coords: [x, y]
   });
   const [hitX = 0 , hitY = 0] = hit || [];
 

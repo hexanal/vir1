@@ -16,7 +16,6 @@ import useFaderControl from '../hooks/useFaderControl';
 import useSelection from '../hooks/useSelection';
 
 export default function Positioning(props) {
-  // const [xx, setXx] = useState('chicken');
   const [posX, PosXFader] = useFaderControl({
     label: 'X Position',
     value: 0,
@@ -35,9 +34,9 @@ export default function Positioning(props) {
   const graphRef = useRef(null);
   const { hit } = useCollision({
     ref: graphRef,
-    cursor: [x, y]
+    coords: [x, y]
   });
-  const [hitX = 0 , hitY = 0] = hit || [];
+  const [hitX = 0, hitY = 0] = hit || [];
 
   const {
     selectionPath,
@@ -56,6 +55,9 @@ export default function Positioning(props) {
   // selected coords
   const [sx1, sy1] = selected !== null ? selected[0] : [];
   const [sx2, sy2] = selected !== null ? selected[2] : [];
+
+  // console.log([x1, y1, x2, y2, sx1, sy1, sx2, sy2]);
+  // console.log([x, y]);
 
   const dots = [
     {

@@ -37,7 +37,7 @@ export default function Selekshun(props) {
 
   const { hit } = useCollision({
     ref,
-    cursor: [x, y]
+    coords: [x, y]
   });
 
   const startHit = useRef(null);

@@ -40,7 +40,7 @@ export default function SizeUp(props) {
   const graphRef = useRef(null);
   const { hit } = useCollision({
     ref: graphRef,
-    cursor: [x, y]
+    coords: [x, y]
   });
   const [hitX = 0 , hitY = 0] = hit || [];
 

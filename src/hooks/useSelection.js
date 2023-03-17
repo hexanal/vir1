@@ -1,7 +1,5 @@
 import { useCallback, useState, useEffect, useRef } from 'react';
 
-import useSize from './useSize';
-
 export default function useSelection(props) {
   const {
     coords = null,
