@@ -9,7 +9,7 @@ export default function useRaf(fn = false) {
 
   const onRaf = useCallback(time => {
     const t1 = Date.now();
-    const delta = t1 - t.current;
+    const delta = t1 - t;
 
     setT(t1);
     dt.current = delta;

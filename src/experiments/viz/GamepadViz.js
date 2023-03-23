@@ -8,9 +8,11 @@ import  {
 } from 'react';
 
 import useRaf from '../../hooks/useRaf';
+import useKeys from '../../hooks/useKeys';
 import useFaderControl from '../../hooks/useFaderControl';
 import useToggleControl from '../../hooks/useToggleControl';
 import useGamepads from '../../hooks/useGamepads';
+import useSynth from '../../hooks/useSynth';
 import ControlPanel from '../../components/controls/ControlPanel';
 
 import Graph from '../../components/viz/Graph';
@@ -49,9 +51,15 @@ export default function GamepadViz(props) {
   const [GAMMA, GammaFader] = useFaderControl({
     label: SYMBOL.GAMMA,
     value: 0.5,
-    min: 0.0,
-    max: 5,
+    min: 0,
+    max: 1,
     step: 0.01,
+  });
+  const { keys } = useKeys();
+  const notes = useRef([]);
+  const { synth } = useSynth({
+    volume: GAMMA,
+    notes: notes.current,
   });
 
   const { gamepads, getGamepadInputs } = useGamepads();
@@ -80,6 +88,52 @@ export default function GamepadViz(props) {
     pad = false,
     power = false,
   } = getGamepadInputs(0) || {};
+
+  const onButton = useCallback((note, on) => {
+    notes.current = notes.current.filter(n => {
+      const { note: targetNote } = n || {};
+      return targetNote !== note;
+    });
+
+    if (on) {
+      notes.current.push({
+        note,
+        velocity: 1,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    onButton('C', buttonA);
+    onButton('D', buttonB);
+    onButton('F', buttonX);
+    onButton('G', buttonY);
+  }, [buttonA, buttonB, buttonX, buttonY]);
+
+  // getVoiceInputs()
+  // getXRInputs(0) ... ?
+  // getKeyboardInputs(0) ... etc ? many keyboards?!
+  // getPointerInputs(0) ... etc
+  // {
+  // x,
+  // y,
+  // z, ?
+  // pressure,
+  // v,
+    // dx,
+  // {
+  // x,
+  // y,
+  // z, ?
+  // pressure,
+  // v,
+    // dx,
+    // dt,
+    // dy,
+    // dn,
+    // dt,
+  // ?!
+  // }
 
   return (
     <div

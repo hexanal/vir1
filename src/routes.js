@@ -44,6 +44,10 @@ import FourGraphs from './experiments/FourGraphs';
 import Womblous from './experiments/Womblous';
 
 import GamepadViz from './experiments/viz/GamepadViz';
+import GPT from './experiments/three/GPT';
+import GPT2 from './experiments/three/GPT2';
+
+import Phys1 from './experiments/canvas/phys1';
 
 export const routes = [
   //
@@ -51,46 +55,46 @@ export const routes = [
   { path: '/gamepad', element: <GamepadViz />, },
 
   // mehxperiments
-  {
-    path: '/mehx',
-    children: [
-      { path: 'A001', element: <A001 />, },
-      { path: 'A002', element: <A002 />, },
-      { path: 'A003', element: <A003 />, },
-      { path: 'A004', element: <A004 />, },
-      { path: 'avg-accel', element: <AverageAcceleration />, },
-      { path: 'B001', element: <B001 />, },
-      { path: 'B002', element: <B002 />, },
-      { path: 'B003', element: <B003 />, },
-      { path: 'B004', element: <B004 />, },
-      { path: 'B005', element: <B005 />, },
-      { path: 'B006', element: <B006 />, },
-      { path: 'B007', element: <B007 />, },
-      { path: 'C001', element: <C001 />, },
-      { path: 'C002', element: <C002 />, },
-      { path: 'traj-a', element: <TrajA />, },
-      { path: 'traj-b', element: <TrajB />, },
-      { path: 'traj-c', element: <TrajC />, },
-      { path: 'selekshun', element: <Selekshun />, },
-      { path: 'some-controls', element: <SomeControls />, },
-      { path: 'dance-mofo', element: <DanceMofo />, },
-      { path: 'the-canvas', element: <TheCanvas />, },
-      { path: 'hits-only', element: <HitsOnly />, },
-      { path: 'datetime', element: <DateTime />, },
-      { path: 'beansies', element: <Beansies />, },
-      { path: 'cool-beans', element: <CoolBeans />, },
-      { path: 'cooler', element: <Cooler />, },
-      { path: 'move-three', element: <MoveThree />, },
-      { path: 'again-controls', element: <AgainControls />, },
-      { path: 'messy-controls', element: <MessyControls />, },
-      { path: 'even-more-controls', element: <EvenMoreControls />, },
-      { path: 'growing', element: <Growing />, },
-      { path: 'growing-taller', element: <GrowingTaller />, },
-      { path: 'positioning', element: <Positioning />, },
-      { path: 'size-up', element: <SizeUp />, },
-      { path: '4-graphs', element: <FourGraphs />, },
-      { path: 'womb', element: <Womblous />, },
-    ]
-  },
+  { path: 'A001', element: <A001 />, },
+  { path: 'A002', element: <A002 />, },
+  { path: 'A003', element: <A003 />, },
+  { path: 'A004', element: <A004 />, },
+  { path: 'avg-accel', element: <AverageAcceleration />, },
+  { path: 'B001', element: <B001 />, },
+  { path: 'B002', element: <B002 />, },
+  { path: 'B003', element: <B003 />, },
+  { path: 'B004', element: <B004 />, },
+  { path: 'B005', element: <B005 />, },
+  { path: 'B006', element: <B006 />, },
+  { path: 'B007', element: <B007 />, },
+  { path: 'C001', element: <C001 />, },
+  { path: 'C002', element: <C002 />, },
+  { path: 'traj-a', element: <TrajA />, },
+  { path: 'traj-b', element: <TrajB />, },
+  { path: 'traj-c', element: <TrajC />, },
+  { path: 'selekshun', element: <Selekshun />, },
+  { path: 'some-controls', element: <SomeControls />, },
+  { path: 'dance-mofo', element: <DanceMofo />, },
+  { path: 'the-canvas', element: <TheCanvas />, },
+  { path: 'hits-only', element: <HitsOnly />, },
+  { path: 'datetime', element: <DateTime />, },
+  { path: 'beansies', element: <Beansies />, },
+  { path: 'cool-beans', element: <CoolBeans />, },
+  { path: 'cooler', element: <Cooler />, },
+  { path: 'move-three', element: <MoveThree />, },
+  { path: 'again-controls', element: <AgainControls />, },
+  { path: 'messy-controls', element: <MessyControls />, },
+  { path: 'even-more-controls', element: <EvenMoreControls />, },
+  { path: 'growing', element: <Growing />, },
+  { path: 'growing-taller', element: <GrowingTaller />, },
+  { path: 'positioning', element: <Positioning />, },
+  { path: 'size-up', element: <SizeUp />, },
+  { path: '4-graphs', element: <FourGraphs />, },
+  { path: 'womb', element: <Womblous />, },
+
+  { path: '/three/gpt', element: <GPT />, },
+  { path: '/three/gpt2', element: <GPT2 />, },
+
+  { path: '/canvas/phys1', element: <Phys1 />, },
 ];
 
