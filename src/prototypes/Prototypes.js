@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
-import { routes } from '../routes';
+import { routes } from './prototypesList';
 import PageLink from '../components/PageLink';
 
-export default function IndexPage(props) {
+export default function Prototypes(props) {
   return (
     <ul
       style={{
@@ -17,4 +16,3 @@ export default function IndexPage(props) {
     </ul>
   );
 };
-

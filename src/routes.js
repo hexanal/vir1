@@ -38,20 +38,25 @@ import MoveThree from './experiments/MoveThree';
 
 import Growing from './experiments/Growing';
 import GrowingTaller from './experiments/GrowingTaller';
+import TextTree from './experiments/TextTree';
 import Positioning from './experiments/Positioning';
 import SizeUp from './experiments/SizeUp';
 import FourGraphs from './experiments/FourGraphs';
 import Womblous from './experiments/Womblous';
+import Wiggley from './experiments/Wiggley';
+import Cursoor from './experiments/Cursoor';
 
 import GamepadViz from './experiments/viz/GamepadViz';
 import GPT from './experiments/three/GPT';
 import GPT2 from './experiments/three/GPT2';
 
-import Phys1 from './experiments/canvas/phys1';
+import Prototypes from './prototypes/Prototypes';
 
 export const routes = [
   //
   { path: '/', element: <IndexPage />, },
+  { path: '/prototypes', element: <Prototypes />, },
+
   { path: '/gamepad', element: <GamepadViz />, },
 
   // mehxperiments
@@ -59,7 +64,7 @@ export const routes = [
   { path: 'A002', element: <A002 />, },
   { path: 'A003', element: <A003 />, },
   { path: 'A004', element: <A004 />, },
-  { path: 'avg-accel', element: <AverageAcceleration />, },
+  // { path: 'avg-accel', element: <AverageAcceleration />, },
   { path: 'B001', element: <B001 />, },
   { path: 'B002', element: <B002 />, },
   { path: 'B003', element: <B003 />, },
@@ -69,32 +74,34 @@ export const routes = [
   { path: 'B007', element: <B007 />, },
   { path: 'C001', element: <C001 />, },
   { path: 'C002', element: <C002 />, },
-  { path: 'traj-a', element: <TrajA />, },
-  { path: 'traj-b', element: <TrajB />, },
-  { path: 'traj-c', element: <TrajC />, },
-  { path: 'selekshun', element: <Selekshun />, },
-  { path: 'some-controls', element: <SomeControls />, },
-  { path: 'dance-mofo', element: <DanceMofo />, },
+  // { path: 'traj-a', element: <TrajA />, },
+  // { path: 'traj-b', element: <TrajB />, },
+  // { path: 'traj-c', element: <TrajC />, },
+  // { path: 'selekshun', element: <Selekshun />, },
+  // { path: 'some-controls', element: <SomeControls />, },
+  // { path: 'dance-mofo', element: <DanceMofo />, },
   { path: 'the-canvas', element: <TheCanvas />, },
   { path: 'hits-only', element: <HitsOnly />, },
   { path: 'datetime', element: <DateTime />, },
-  { path: 'beansies', element: <Beansies />, },
-  { path: 'cool-beans', element: <CoolBeans />, },
-  { path: 'cooler', element: <Cooler />, },
+  // { path: 'beansies', element: <Beansies />, },
+  // { path: 'cool-beans', element: <CoolBeans />, },
+  // { path: 'cooler', element: <Cooler />, },
   { path: 'move-three', element: <MoveThree />, },
-  { path: 'again-controls', element: <AgainControls />, },
-  { path: 'messy-controls', element: <MessyControls />, },
-  { path: 'even-more-controls', element: <EvenMoreControls />, },
+  // { path: 'again-controls', element: <AgainControls />, },
+  // { path: 'messy-controls', element: <MessyControls />, },
+  // { path: 'even-more-controls', element: <EvenMoreControls />, },
   { path: 'growing', element: <Growing />, },
   { path: 'growing-taller', element: <GrowingTaller />, },
+  { path: 'text-tree', element: <TextTree />, },
   { path: 'positioning', element: <Positioning />, },
   { path: 'size-up', element: <SizeUp />, },
   { path: '4-graphs', element: <FourGraphs />, },
   { path: 'womb', element: <Womblous />, },
 
+  { path: 'wiggley', element: <Wiggley />, },
+  { path: 'cursoor', element: <Cursoor />, },
+
   { path: '/three/gpt', element: <GPT />, },
   { path: '/three/gpt2', element: <GPT2 />, },
-
-  { path: '/canvas/phys1', element: <Phys1 />, },
 ];
 

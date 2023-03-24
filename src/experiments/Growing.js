@@ -43,22 +43,22 @@ function randomWord() {
 function randomTree({
   nodes = 0,
   id = 'root',
-  label = 'root',
+  contents = 'root',
   children = [],
 }) {
   let tree = {
     id,
-    label,
+    contents,
     children,
   };
 
   for (let i = 0; i <= nodes; i++) {
     const subId = uuidv4();
-    const subLabel = `${randomWord()}_${randomWord()}`;
+    const subcontents = `${randomWord()}_${randomWord()}`;
     const sub = randomTree({
       nodes: randomInt(0, nodes), // TODO
       id: subId,
-      label: subLabel,
+      contents: subcontents,
     });
 
     tree.children.push(sub);
@@ -69,36 +69,36 @@ function randomTree({
 
 const initialTree = {
   id: 'root',
-  label: '×',
+  contents: '×',
   children: [
     {
       id: 'alpha',
-      label: '𝛼',
+      contents: '𝛼',
     },
     {
       id: 'beta',
-      label: '𝛽',
+      contents: '𝛽',
     },
     {
       id: 'gamma',
-      label: '𝛾',
+      contents: '𝛾',
     },
 
     {
       id: 'delta',
-      label: '𝛿',
+      contents: '𝛿',
       children: [
         {
           id: 'epsilon',
-          label: '𝜀',
+          contents: '𝜀',
           children: [
             {
               id: 'zeta',
-              label: '𝜁',
+              contents: '𝜁',
               children: [
                 {
                   id: 'eta',
-                  label: '𝜂',
+                  contents: '𝜂',
                 },
               ]
             },
@@ -106,11 +106,11 @@ const initialTree = {
         },
         {
           id: 'theta',
-          label: '𝜃',
+          contents: '𝜃',
         },
         {
           id: 'iota',
-          label: '𝜄',
+          contents: '𝜄',
         },
       ]
     },
@@ -152,7 +152,7 @@ export default function Growing(props) {
           ...children,
           {
             id: uuidv4(),
-            label: '𝞳',
+            contents: '𝞳',
           }
         ]
       }

@@ -42,7 +42,7 @@ function randomWord() {
 
 function randomTree({
   id = 'root',
-  label = 'root',
+  contents = 'root',
   maxDepth = 2,
   maxNodes = 2,
   depth = 0,
@@ -58,13 +58,13 @@ function randomTree({
 
   for (let i = 0; i < subNodes; i++) {
     const subId = uuidv4();
-    const subLabel = `${randomWord()}_${randomWord()}`;
+    const subcontents = `${randomWord()}_${randomWord()}`;
 
     if (depth > maxDepth) break;
 
     const sub = randomTree({
       id: subId,
-      label: subLabel,
+      contents: subcontents,
       depth,
       maxDepth,
       maxNodes,
@@ -75,7 +75,7 @@ function randomTree({
 
   return {
    id,
-   label,
+   contents,
    children
   };
 }

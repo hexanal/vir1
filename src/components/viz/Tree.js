@@ -6,10 +6,11 @@ export default function Tree(props) {
     node,
     config, // TODO
     onClickNode = null,
+    SHOW_COORDS = false,
   } = props || {};
   const {
     id,
-    label,
+    contents,
     depth = 0,
     subIndex = 0,
     siblings = 0,
@@ -83,13 +84,14 @@ export default function Tree(props) {
                 type="button"
                 onClick={() => onClickNode(node)}
               >
-                {label}
+                {contents}
               </button>
             )
-            : label}
+            : contents}
         </div>
       </div>
 
+      {SHOW_COORDS ? (
       <pre
         style={{
           position: 'absolute',
@@ -103,6 +105,7 @@ export default function Tree(props) {
         }}
       >{`x: ${x}
 y: ${y} `}</pre>
+      ): null}
 
       <div>
         {children.map((c,i) => {
@@ -119,6 +122,7 @@ y: ${y} `}</pre>
               node={childNode}
               config={config}
               onClickNode={() => onClickNode(childNode)}
+              SHOW_COORDS={SHOW_COORDS}
               // parent?!!?!?
             />
           );
