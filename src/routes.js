@@ -50,6 +50,12 @@ import GamepadViz from './experiments/viz/GamepadViz';
 import GPT from './experiments/three/GPT';
 import GPT2 from './experiments/three/GPT2';
 
+// p5
+import PeeFiveOne from './experiments/p5/PeeFiveOne';
+import PeeFiveTwo from './experiments/p5/PeeFiveTwo';
+import PeeFiveThree from './experiments/p5/PeeFiveThree';
+import PeeFiveFour from './experiments/p5/PeeFiveFour';
+
 import Prototypes from './prototypes/Prototypes';
 
 export const routes = [
@@ -100,6 +106,11 @@ export const routes = [
 
   { path: 'wiggley', element: <Wiggley />, },
   { path: 'cursoor', element: <Cursoor />, },
+
+  { path: '/p5/PeeFiveOne', element: <PeeFiveOne />, },
+  { path: '/p5/PeeFiveTwo', element: <PeeFiveTwo />, },
+  { path: '/p5/PeeFiveThree', element: <PeeFiveThree />, },
+  { path: '/p5/PeeFiveFour', element: <PeeFiveFour />, },
 
   { path: '/three/gpt', element: <GPT />, },
   { path: '/three/gpt2', element: <GPT2 />, },

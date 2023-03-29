@@ -5,9 +5,9 @@ import { lerp, smoothstep } from '../utils/interpolate';
 
 import useRaf from '../hooks/useRaf';
 import usePointers from './usePointers';
-import useMatter from './useMatter';
+import greek from '../utils/greek';
 
-export default function ProtoThree(props) {
+export default function ProtoFive(props) {
   const ref = useRef(null);
   const vw = window.innerWidth;
   const vh = window.innerHeight;
@@ -20,8 +20,6 @@ export default function ProtoThree(props) {
 
   const trail = useRef([]);
   const lines = useRef([]);
-
-  const { addPlanet } = useMatter({ ref });
 
   useEffect(() => {
     if (mouseButtonsPressed.has('left')) {
@@ -146,4 +144,5 @@ export default function ProtoThree(props) {
     </div>
   );
 };
+
 

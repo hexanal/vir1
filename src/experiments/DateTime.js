@@ -122,7 +122,7 @@ export default function DateTime(props) {
         '2-digit',
       ],
     },
-    MESSAGE: 'music',
+    MESSAGE: 'messing around',
   });
 
   const { t, t0, elapsed }  = useRaf();

@@ -87,7 +87,7 @@ function Ground(props) {
   );
 }
 
-export default function GPT(props) {
+export default function Hands(props) {
   return (
     <Canvas
       style={{

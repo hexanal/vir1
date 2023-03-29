@@ -32,7 +32,7 @@ function smoothstep(x, a, b) {
   return x * (b - a) + a;
 }
 
-export default function Wiggley(props) {
+export default function MoveGraph(props) {
   const {
     style = null,
     graphStyle = null,
@@ -73,7 +73,7 @@ export default function Wiggley(props) {
   const ref = useRef(null);
   const { hit, isInside } = useCollision({
     ref,
-    coords: [x, y]
+    cursor: [x, y]
   });
   const [hitX = 0 , hitY = 0] = hit || [];
   const pan = useRef([0, 0]);
@@ -99,8 +99,8 @@ export default function Wiggley(props) {
 
       const noisex = Math.cos(t * 0.007 * ZETA + i) * AMPLITUDE;
       const noisey = Math.sin(t * 0.007 * ZETA + i) * AMPLITUDE;
-      const wavex2 = Math.sin(t * 0.007 * LAMBDA + i + X_ST * i) * AMPLITUDE;
-      const wavey2 = Math.cos(t * 0.007 * LAMBDA + i + Y_ST * i) * AMPLITUDE;
+      const wavex2 = Math.sin(t * 0.007 * LAMBDA + i + X_ST) * AMPLITUDE;
+      const wavey2 = Math.cos(t * 0.007 * LAMBDA + i + Y_ST) * AMPLITUDE;
 
       const dx = sherp(i / TESSELS, px, nx);
       const dy = sherp(i / TESSELS, py, ny);
