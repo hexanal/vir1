@@ -4,6 +4,10 @@ import useRaf from '../hooks/useRaf';
 import useKeys from '../hooks/useKeys';
 import Logger from '../components/viz/Logger';
 
+import MESSAGES from '../config';
+
+const { OBS_MESSAGE } = MESSAGES;
+
 function Boom(props) {
   const {
     children = null,
@@ -122,7 +126,7 @@ export default function DateTime(props) {
         '2-digit',
       ],
     },
-    MESSAGE: 'messing around',
+    MESSAGE: OBS_MESSAGE || '—',
   });
 
   const { t, t0, elapsed }  = useRaf();

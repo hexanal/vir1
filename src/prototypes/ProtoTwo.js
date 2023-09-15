@@ -74,8 +74,6 @@ export default function ProtoTwo(props) {
   const vh = window.innerHeight;
 
   const { pointers, primaryPointer, mouseButtonsPressed } = usePointers();
-  const { x, y } = pointers[0] || {};
-  const { x: primaryX, y: primaryY } = primaryPointer || {};
 
   const testCoords = useRef([50, 50]);
 
@@ -85,37 +83,55 @@ export default function ProtoTwo(props) {
     const h = ref.current.height;
     c.clearRect(0, 0, w, h);
 
-    c.fillStyle = `hsl(${60 * (mouseButtonsPressed.has('right') ? 2 : 1)} 50% 50%)`;
-    c.beginPath();
-    c.arc(
-      primaryX,
-      primaryY,
-      20 * (mouseButtonsPressed.has('left') ? 2 : 1),
-      0,
-      2 * Math.PI
-    );
-    c.fill();
+    if (!pointers[0]) {
+      return;
+    }
 
-    c.font = '13px monospace';
-    c.fillStyle = `rgb(255 0 0 / 1)`;
-    c.fillText(
-      `trying to do physics`,
-      window.innerWidth / 2 + Math.sin(primaryY * 0.01) * 10,
-      window.innerHeight / 2 + Math.cos(primaryY * 0.01) * 10
-    );
+    Object.keys(pointers).map( pointerId => {
+      console.log(pointerId);
+      const { x, y } = pointers[pointerId] || {};
+      c.font = '13px monospace';
+      // c.fillStyle = `rgb(255 0 0 / 1)`;
+      // c.fillText(
+      //   `trying to do physics`,
+      //   window.innerWidth / 2 + Math.sin(primaryY * 0.01) * 10,
+      //   window.innerHeight / 2 + Math.cos(primaryY * 0.01) * 10
+      // );
 
-    c.fillStyle = `rgb(0 0 255 / 1)`;
-    c.fillText(`x ${primaryX}`, 20, 20);
-    c.fillText(`y ${primaryY}`, 20, 40);
 
-    const { velocity, acceleration } = getMotion({
-      coords: [primaryX, primaryY],
-      dt
+      c.fillStyle = `rgb(0 0 255 / 1)`;
+      c.fillText(`x ${x}`, 20, 20);
+      c.fillText(`y ${y}`, 20, 40);
+
+
+
+
+      c.fillStyle = `hsl(${60 * (mouseButtonsPressed.has('right') ? 2 : 1)} 50% 50%)`;
+      c.beginPath();
+      c.arc(
+        x,
+        y,
+        20 * (mouseButtonsPressed.has('left') ? 2 : 1),
+        0,
+        2 * Math.PI
+      );
+      c.fill();
+
+
+      c.fillStyle = `rgb(0 0 0 / 1)`;
+      c.fillText(`x ${x}`, x, y);
+      c.fillText(`y ${y}`, x, y + 15);
+
     });
-    const [vx, vy] = velocity || [];
-    const [ax, ay] = acceleration || [];
 
+    // const { velocity, acceleration } = getMotion({
+    //   coords: [x, y],
+    //   dt
+    // });
+    // const [vx, vy] = velocity || [];
+    // const [ax, ay] = acceleration || [];
 
+    /*
     c.fillStyle = `rgb(255 0 255 / 1)`;
     c.fillText(`vx ${vx}`, 20, 60);
     c.fillText(`vy ${vy}`, 20, 80);
@@ -138,6 +154,7 @@ export default function ProtoTwo(props) {
     c.fillStyle = `rgb(0 0 0 / 1)`;
     c.fillText(`ax ${x2}`, 20, 140);
     c.fillText(`ay ${y2}`, 20, 160);
+    */
   });
 
 

@@ -91,5 +91,6 @@ let tf = 1;
 
 // Run the simulation and print the final position of the Earth
 let result = rungeKutta(sun, earth, M_sun, M_earth, G, t0, tf);
+
 console.log(result.earth);
 

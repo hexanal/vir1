@@ -18,6 +18,7 @@ export default function usePointers() {
   };
 
   const handlePointerDown = useCallback((e) => {
+    console.log(e);
     const pointer = {
       x: e.clientX,
       y: e.clientY,
