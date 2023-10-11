@@ -14,6 +14,7 @@ export default function useSize({
           const { contentRect } = entry || {};
           const { x, y, width, height } = contentRect || {};
           rect.current = contentRect;
+          size.current = [width, height];
         }
       });
 

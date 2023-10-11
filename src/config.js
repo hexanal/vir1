@@ -1,5 +1,5 @@
 const MESSAGES = {
-  OBS_MESSAGE: 'state of the union address',
+  OBS_MESSAGE: 'pushing live 😬',
 };
 
 export default MESSAGES;

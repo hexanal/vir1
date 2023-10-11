@@ -17,6 +17,7 @@ export default function FunkControl(props) {
   const val = useRef(value);
 
   const { pointers } = usePointer();
+  const { buttons } = pointers[0];
   const primary = pointers[0];
   const { movement } = primary || {};
 

@@ -17,13 +17,6 @@ function Boom(props) {
     style = {}
   } = props || {};
 
-  // const { keys } = useKeys();
-  // useEffect(() => {
-  //   if( keys.includes('a') ) {
-      
-  //   }
-  // }, [keys]);
-
   return (
     <div style={{
       position: 'absolute',

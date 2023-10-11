@@ -10,6 +10,7 @@ const GraphWithRef = forwardRef(function Graph(
     max = [100, 100],
     min = [0, 0],
     withoutLines = false,
+    fit = false,
   },
   ref
 ) {
@@ -25,7 +26,7 @@ const GraphWithRef = forwardRef(function Graph(
       ref={ref}
       xmlns="http://www.w3.org/2000/svg"
       viewBox={`0 0 100 100`}
-      preserveAspectRatio={size === null ? 'xMidYMid meet' : 'none'}
+      preserveAspectRatio={size === null || fit ? 'xMidYMid meet' : 'none'}
       style={{
         width: size === null ? '100%' : `${sx}rem` ,
         height: size === null ? '100%' : `${sy}rem`,

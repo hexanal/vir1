@@ -20,22 +20,27 @@ function norm(value = 0, step = 0.001) {
 
 export default function B004(props) {
   const {
+    origin = [0.5, 0.5],
+    color = `rgb(0 0 0 / 1)`,
+    timeOffset = 0,
+    noControls = false,
+  } = props;
+
+  const {
     POINTS,
     ALPHA,
     BETA,
     THETA,
     TIMESCALE,
-    ORIGIN,
   } = useControls({
-    ORIGIN: [50, 50],
     POINTS: {
-      value: 256,
+      value: 1024,
       min: 0,
       max: 1024,
       step: 1,
     },
     ALPHA: {
-      min: 0.001,
+      min: 1.28,
       max: 2,
       value: 0.2,
       step: 0.001,
@@ -49,7 +54,7 @@ export default function B004(props) {
     THETA: {
       min: 0.01,
       max: 0.5,
-      value: 0.15,
+      value: 0.25,
       step: 0.01,
     },
     TIMESCALE: {
@@ -69,16 +74,16 @@ export default function B004(props) {
   const [x, y] = mousePosition || [];
 
   const d = useCallback( t => {
-    const [originX, originY] = ORIGIN;
-    let str = `M ${originX},${originY}`;
+    const [originX, originY] = origin || [0.5, 0.5];
+    let str = `M ${originX * 100},${originY * 100}`;
 
-    const angleWobble = (1 + Math.sin(t * 0.0005)) * 10;
-    const angleProgress = t * -0.005 * TIMESCALE;
+    const angleWobble = (1 + Math.sin((t + timeOffset) * 0.0005)) * 10;
+    const angleProgress = (t + timeOffset) * -0.005 * TIMESCALE;
 
     for (let i = 0; i <= POINTS; i++) {
       const r = (i * ALPHA) + BETA * THETA;
-      const lx = originX + r * Math.cos(i * THETA + angleProgress);
-      const ly = originY + r * Math.sin(i * THETA + angleProgress);
+      const lx = originX * 100 + r * Math.cos(i * THETA + angleProgress);
+      const ly = originY * 100 + r * Math.sin(i * THETA + angleProgress);
 
       str += `
         L ${lx},${ly}
@@ -86,11 +91,11 @@ export default function B004(props) {
     }
 
     return str;
-  }, [POINTS, ORIGIN, ALPHA, BETA, THETA, TIMESCALE]);
+  }, [POINTS, ALPHA, BETA, THETA, TIMESCALE, origin, timeOffset]);
 
   return (
-    <Graph>
-      <path d={d(t)} stroke="rgb(255 255 0 / 1)" fill="none" vectorEffect="non-scaling-stroke" />
+    <Graph withoutLines>
+      <path d={d(t)} stroke={color} strokeWidth={5} fill="none" vectorEffect="non-scaling-stroke" />
     </Graph>
   );
 };

@@ -20,7 +20,7 @@ export default function usePointer({
   onPointerUp: onCustomPointerUp,
 } = {}) {
   // const pointers = useRef({});
-  const [pointers, setPointers] = useState([]);
+  const [pointers, setPointers] = useState({});
   // current position
   // barycenter / center of mass
 
@@ -93,7 +93,7 @@ export default function usePointer({
     const movement = [movementX, movementY];
 
     const pointer = {
-      ...previous,
+      // ...previous,
       position,
       ratio,
       displace,
@@ -105,17 +105,24 @@ export default function usePointer({
       angleFromCenter,
       delta,
       changes,
-
-      buttons,
+      buttons: e.buttons,
     };
-    const newPointers = pointers.map((p,i) => {
-      if (i === pointerId) {
-        return pointer;
+    /*
+    const newPointers = Object.keys(pointers).map((id) => {
+      const curPointer = pointers[id] || null;
+      if (curPointer !== null) {
+        return { ...curPointer, ...pointer};
+      }
+      return curPointer;
+    });
+    */
+
+    setPointers(p => {
+      if (!p[pointerId]) {
+        p[pointerId] = {...previous, pointer };
       }
       return p;
     });
-
-    setPointers(newPointers);
 
   }, [pointers, setPointers, origin, onCustomPointerMove]);
   // }, [origin, onCustomPointerMove]);
@@ -151,7 +158,7 @@ export default function usePointer({
       position,
       start: [...position],
       ratioStart: [position[0]/max[0], position[1]/max[1]],
-      buttons // TODO
+      buttons,
     };
 
     setPointers(p => {
@@ -168,25 +175,17 @@ export default function usePointer({
 
     const {
       pointerId,
+      buttons,
     } = e || {};
 
-    // if (pointerId !== 0) {
-    //   delete pointers.current[pointerId];
-    // }
-    if (pointerId !== 0) {
-      setPointers(p => {
-        delete p[pointerId];
-        return p;
-      });
-    }
+    setPointers(p => {
+      // console.log( 'up', pointers );
 
-    // if (pressedButtons === 0) {
-    //   setButtons([]);
-    // }
-    // // TODO handle more?
-    // if (pressedButtons >= 3) {
-    //   setButtons( pressedButtons.filter(b => b !== button) );
-    // }
+      if (p[pointerId]) {
+        delete p[pointerId];
+      }
+      return p;
+    });
   }, [pointers, setPointers, onCustomPointerUp]);
 
   useEffect(() => {
@@ -203,7 +202,6 @@ export default function usePointer({
 
   return {
     pointers,
-    // pointers: pointers.current,
   };
 }
 

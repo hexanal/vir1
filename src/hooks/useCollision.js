@@ -10,19 +10,22 @@ export default function useCollision(props) {
 
   const [x = 0, y = 0] = coords || [];
   const bounds = useRef([0, 0]);
+  // const size = useRef([0, 0]);
   const hit = useRef([0, 0]);
   const isInside = useRef(false);
-  const { size, rect } = useSize({ ref });
+  // TODO
+  const { rect } = useSize({ ref });
 
   useEffect(() => {
     const b = ref.current ? ref.current.getBoundingClientRect() : null;
-    const { x: elx, y: ely } = b || {};
+    const { x: elx, y: ely, width: elWidth, height: elHeight } = b || {};
     bounds.current = [elx, ely];
   }, [rect]);
 
   useEffect(() => {
     if (x && y) {
       const [offsetX, offsetY] = bounds.current;
+      // TODO to ponder
       const { width, height } = rect || {};
       // TODO 4d-ify [x,y,z,t]
       // n-dimensional
@@ -41,7 +44,7 @@ export default function useCollision(props) {
       hit.current = null;
       isInside.current = null;
     }
-  }, [x, y]);
+  }, [x, y, rect]);
 
   return {
     hit: hit.current,

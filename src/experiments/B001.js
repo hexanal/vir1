@@ -24,11 +24,11 @@ export default function B001(props) {
 
   // const { t, dt, elapsed } = useRaf();
 
-  const { pointers, mouse } = usePointer({
+  const { pointers } = usePointer({
     origin: [window.innerWidth / 2, window.innerHeight / 2]
   });
-  const { position: mousePosition } = mouse || {};
-  const [x, y] = mousePosition || [];
+  const { position } = pointers[0] || {};
+  const [x, y] = position || [];
   const [pathPoints, setPathPoints] = useState([
     {
       id: uuidv4(),
@@ -70,7 +70,6 @@ export default function B001(props) {
         50 + (x / window.innerWidth * 100),
         50 + (y / window.innerHeight * 100),
       ]
-      console.log(coords);
       setPathPoints(p => [...p, {
         type: 'L',
         coords
@@ -128,7 +127,7 @@ export default function B001(props) {
       </form>
       */}
 
-      <Graph>
+      <Graph size={[30, 30]}>
         <circle
           cx={50}
           cy={50}

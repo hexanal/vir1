@@ -1,12 +1,5 @@
 import { useCallback, useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-// import useRaf from '../hooks/useRaf';
-// import useKeys from '../hooks/useKeys';
-// import useGamepads from '../hooks/useGamepads';
-// import usePointer from '../hooks/usePointer';
-// import useCollision from '../hooks/useCollision';
-
-// import Scanner from '../components/viz/Scanner';
 
 import useFaderControl from '../hooks/useFaderControl';
 import BasicTree from '../components/viz/BasicTree';

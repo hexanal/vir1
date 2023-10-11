@@ -207,14 +207,16 @@ export default function TrajB(props) {
   ];
 
   return (
-    <div>
-      <div
+    <div
         style={{
-          zIndex: 3,
-          position: 'absolute',
-          top: '1rem',
-          left: '1rem',
+          position: 'relative',
+          overflow: 'scroll',
+          width: '100%',
+          height: '100%',
         }}
+    >
+
+      <div
       >
         {scanners.map(scanner => {
           const {

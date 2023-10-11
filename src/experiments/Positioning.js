@@ -38,6 +38,8 @@ export default function Positioning(props) {
   });
   const [hitX = 0, hitY = 0] = hit || [];
 
+  console.log(buttons);
+
   const {
     selectionPath,
     selectedPath,

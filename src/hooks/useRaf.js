@@ -1,6 +1,6 @@
 import { useCallback, useState, useEffect, useRef } from 'react';
 
-export default function useRaf(fn = false) {
+export default function useRaf(fn = false, deps = []) {
   const [t, setT] = useState(Date.now());
   const t0 = useRef(Date.now());
   const dt = useRef(0);
@@ -26,7 +26,7 @@ export default function useRaf(fn = false) {
 
     raf.current = window.requestAnimationFrame(onRaf);
   // }, [t, t0, setT, setDeltaT, setElapsed]);
-  }, [t, fn]);
+  }, [t, fn, deps]);
 
   useEffect(() => {
     raf.current = window.requestAnimationFrame(onRaf);

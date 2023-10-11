@@ -20,6 +20,10 @@ function wave({ A, lambda, x, v, t, }) {
 }
 
 export default function TheCanvas(props) {
+  const {
+    style,
+    ballColor = null,
+  } = props || {};
   const ref = useRef(null);
   const vw = window.innerWidth;
   const vh = window.innerHeight;
@@ -138,7 +142,7 @@ export default function TheCanvas(props) {
         rows: R,
         cols: C,
         processor: ([i,j]) => {
-          c.fillStyle = `hsl(50 50% 50%)`;
+          c.fillStyle = ballColor || `hsl(50 50% 50%)`;
           c.beginPath();
           c.arc(
             w / R * i + Math.sin(t * 0.008 + i) * 15,
@@ -158,7 +162,9 @@ export default function TheCanvas(props) {
   });
 
   return (
-    <div>
+    <div
+      style={{...style}}
+    >
       <div
         style={{
           zIndex: 3,
@@ -201,7 +207,7 @@ export default function TheCanvas(props) {
         width={vw}
         height={vh}
         style={{
-          position: 'fixed',
+          position: 'absolute',
           zIndex: 2,
           width: '100%',
           height: '100%',

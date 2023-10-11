@@ -149,20 +149,6 @@ export default function GamepadViz(props) {
         ...style,
       }}
     >
-      <ControlPanel
-        style={{
-          position: 'absolute',
-          zIndex: 2,
-          top: '1rem',
-          right: '1rem',
-        }}
-        hidden={false}
-      >
-        <AlphaFader />
-        <BetaFader />
-        <GammaFader />
-      </ControlPanel>
-
       {/* left axes */}
       <Graph
         style={{

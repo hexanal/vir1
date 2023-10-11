@@ -131,7 +131,7 @@ export default function B003(props) {
   }, [fnY, POINTS, ALPHA, BETA, THETA]);
 
   return (
-    <Graph>
+    <Graph withoutLines>
       {/* <path d={d} stroke="rgb(128 128 255 / 1)" fill="none" vectorEffect="non-scaling-stroke" /> */}
       <path d={d2} stroke="rgb(255 32 64 / 1)" fill="none" vectorEffect="non-scaling-stroke" />
     </Graph>
