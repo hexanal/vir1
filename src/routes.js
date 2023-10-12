@@ -57,6 +57,7 @@ import CanvasYeah from './experiments/CanvasYeah';
 import CanvasPro from './experiments/CanvasPro';
 
 import SvgD1 from './experiments/d/SvgD1';
+import Follow1 from './experiments/Follow1';
 
 import Home from './homepage/Home';
 import Resume from './homepage/Resume';
@@ -69,14 +70,18 @@ import Other from './homepage/other/Other';
 
 export const routes = [
   // HOMEPAGE WEBSITE
-  { path: '/', element: <Home />, },
-  { path: '/resume', element: <Resume />, },
+  { path: '/', element: <Home />,
+    children: [
+      { path: 'resume', element: <Resume />, },
+      { path: 'code', element: <Work />, },
+      { path: 'art', element: <Art />, },
+      { path: 'other', element: <Other />, },
+    ],
+  },
+  // { path: '/resume', element: <Resume />, },
   { path: '/1', element: <One />, },
   { path: '/space', element: <Space />, },
   { path: '/space/gluub', element: <Gluub />, },
-  { path: '/work', element: <Work />, },
-  { path: '/art', element: <Art />, },
-  { path: '/other', element: <Other />, },
 
   // RANDOM ROOT LINKS
   { path: 'datetime', element: <DateTime />, },
@@ -85,6 +90,7 @@ export const routes = [
   { path: '/x', element: <IndexPage />,
     children: [
       { path: 'svgd1', element: <SvgD1 />, },
+      { path: 'follow1', element: <Follow1 />, },
       { path: 'canvas-font', element: <CanvasFont />, },
       { path: 'canvas-yeah', element: <CanvasYeah />, },
       { path: 'canvas-pro', element: <CanvasPro />, },

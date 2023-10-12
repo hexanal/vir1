@@ -16,7 +16,6 @@ export default function Circle(props) {
       }}
       preserveAspectRatio="none"
       stroke={stroke}
-      strokeWidth={5}
       fill="none"
     >
       <ellipse
@@ -24,6 +23,7 @@ export default function Circle(props) {
         cy="50"
         rx="50"
         ry="50"
+        strokeWidth={3}
         vectorEffect="non-scaling-stroke"
       />
     </svg>

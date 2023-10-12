@@ -7,28 +7,24 @@ export function smoothstep(x, a, b) {
   return x * (b - a) + a;
 }
 
-export default function useReefer({
-  initialValue = null,
-  next = null,
-}) {
+export default function useReefer(initialValue = null) {
   const value = useRef(initialValue);
+  const next = useRef(initialValue);
+
+  const setValue = useCallback((v) => {
+    next.current = v;
+  }, []);
 
   useRaf(({t}) => {
-    const diff = value.current - next;
-    const diff2 = diff.toFixed(8) / 1;
-    const sign = diff2 > 0 ? 1 : -1;
+    const diff = value.current - next.current;
 
-    const smoot = smoothstep(diff2, value.current, next);
+    // console.log( Math.abs(diff) );
 
-    console.log(smoot);
-    value.current = smoot;
+    // const smoot = smoothstep(diff2, value.current, next);
 
-    // value.current = value.current
-    //   - Math.abs(diff2 * diff2)
-    //     * sign
-    // ;
-  }, [next]);
+    value.current = next.current;
+  }, [value, setValue]);
 
-  return value.current;
+  return [value.current, setValue];
 }
 

@@ -57,6 +57,7 @@ function Work() {
 
       <Circle
         style={{
+          opacity: 0,
           marginTop: '1rem',
           width: '4rem',
           height: '4rem',
@@ -65,7 +66,8 @@ function Work() {
 
       <h1
         style={{
-          fontSize: '5rem',
+          fontSize: 0,
+          height: 0,
           fontWeight: '100',
           margin: 0,
           // textAlign: 'center',
@@ -106,7 +108,7 @@ function Work() {
         },
         {
           id: 'respons',
-          content: 'It is also 100% responsive and as legible as possible on most form factors.',
+          content: 'It is also 100% responsive and as legible as possible on most form factrors.',
         },
       ]}
       video="/WORK/nouveau_cinema.mp4"
