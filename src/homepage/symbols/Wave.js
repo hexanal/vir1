@@ -1,5 +1,9 @@
 export default function Wave(props) {
-  const { style = {} } = props || {};
+  const {
+    style = {},
+    stroke = `rgb(0 0 0 / 1)`,
+    strokeWidth = 3,
+  } = props || {};
 
   return (
     <svg
@@ -12,7 +16,7 @@ export default function Wave(props) {
         ...style,
       }}
       preserveAspectRatio="none"
-      stroke={`rgb(0 0 0 / 1)`}
+      stroke={stroke}
       fill="none"
     >
       <path
@@ -21,8 +25,8 @@ export default function Wave(props) {
           Q 25,0 50,50
           Q 75,100 100,50
         `}
-        strokeWidth={3}
         vectorEffect="non-scaling-stroke"
+        strokeWidth={strokeWidth}
       />
     </svg>
   );

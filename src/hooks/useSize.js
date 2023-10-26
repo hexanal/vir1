@@ -4,8 +4,8 @@ export default function useSize({
   ref
 }) {
   const element = ref && ref.current ? ref.current : null;
-  const size = useRef(null);
-  const rect = useRef(null);
+  const size = useRef();
+  const rect = useRef();
 
   useEffect(() => {
     if (element !== null) {

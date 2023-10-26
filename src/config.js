@@ -1,5 +1,5 @@
 const MESSAGES = {
-  OBS_MESSAGE: 'personal website',
+  OBS_MESSAGE: 'fucking about',
 };
 
 export default MESSAGES;

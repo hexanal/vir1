@@ -1,7 +1,10 @@
+import { useRef } from "react";
+
 export default function Circle(props) {
   const {
     style = {},
     stroke = `rgb(0 0 0 / 1)`,
+    strokeWidth = 3,
   } = props || {};
 
   return (
@@ -14,7 +17,7 @@ export default function Circle(props) {
         height: '1rem',
         ...style,
       }}
-      preserveAspectRatio="none"
+      preserveAspectRatio="xMidYMid meet"
       stroke={stroke}
       fill="none"
     >
@@ -23,8 +26,8 @@ export default function Circle(props) {
         cy="50"
         rx="50"
         ry="50"
-        strokeWidth={3}
         vectorEffect="non-scaling-stroke"
+        strokeWidth={strokeWidth}
       />
     </svg>
   );

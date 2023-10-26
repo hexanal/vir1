@@ -32,11 +32,11 @@ body {
 }
 
 ::-moz-selection {
-  color: yellow;
+  color: lightgrey;
   background: black;
 }
 ::selection {
-  color: yellow;
+  color: lightgrey;
   background: black;
 }
 

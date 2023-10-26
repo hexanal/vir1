@@ -1,11 +1,13 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 import useRaf from "../../hooks/useRaf";
 import usePointer from "../../hooks/usePointer";
 import useReefer from "../../hooks/useReefer";
+import { useSpring, animated as a } from "@react-spring/web";
 
 import FieldLabel from "./FieldLabel";
 import Graph from "../../components/viz/Graph";
 // import Scanner from "../../components/viz/Scanner";
+import HeightToggle from "../HeightToggle";
 
 function Boxed(props) {
   const { style, children } = props || {};
@@ -47,27 +49,7 @@ export default function Project(props) {
   const { pointers } = usePointer();
   const { buttons = 0 } = pointers[0] || {};
 
-  // const CH1 = useRef(0);
-  // const CH1_TARGET = useRef(0);
-  const CH1_YO = useReefer({
-    value: buttons === 1 ? 1 : 0,
-    stiffness: buttons === 1 ? 200 : 150,
-    damping: buttons === 1 ? 8 : 15,
-  }, [buttons]);
-
   const titleParts = title.split(' ');
-
-  // const ease = useCallback((t0, t1) => {
-  //   // const inc = now ? next : now;
-  //   const diff = t1;
-  //   const inc = 0 + diff; // () * (t1 - t0);
-  //   // const inc2 = net - now / 5;
-  //   // const inc2 = lerp(t0, t1);
-  //   return t0 + inc;
-  // }, []);
-
-  // useRaf( ({t, t0, elapsed}) => {
-  // }, [buttons]);
 
   return (
     <div
@@ -83,10 +65,36 @@ export default function Project(props) {
           position: 'relative',
           width: '100%',
           maxWidth: '512px',
-          margin: '5rem auto 0',
+          margin: '1rem auto',
           padding: '0.25rem 1rem',
         }}
       >
+
+
+        <div
+          style={{
+            position: 'absolute',
+            zIndex: 1,
+            top: 0,
+            left: '50%',
+            borderRadius: '50%',
+            width: '150%',
+            backgroundColor: `${color}`,
+            transformOrigin: 'center 0',
+            transform: `
+              translate(-50%, 5%)
+            `,
+          }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox={`0 0 2 2`}
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+          />
+        </div>
 
 
         {title ? <h2
@@ -186,102 +194,68 @@ export default function Project(props) {
           <div
             style={{
               position: 'relative',
+              zIndex: 3,
               maxWidth: '512px',
-              transform: `translate(-1rem, 0)`,
+              transform: `translateX(-1rem)`,
             }}
           >
 
             <div
               style={{
-                position: 'absolute',
-                zIndex: 2,
-                top: '50%',
-                left: '50%',
-                transform: `translate(-50%, -50%)`,
-                borderRadius: '50%',
-                width: '135%',
-                backgroundColor: `${color}`,
-              }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox={`0 0 2 2`}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                }}
-              />
-            </div>
-
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox={`0 0 16 9`}
-              style={{
-                width: '100%',
-                height: '100%',
-              }}
-            />
-            <div
-              style={{
-                position: 'absolute',
-                zIndex: 3,
-                top: 0,
-                left: 0,
+                position: 'relative',
                 overflow: 'hidden',
               }}
             >
-              <video
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  display: 'block',
-                }}
-                muted
-                autoPlay
-                loop
-                playsInline
-              >
-                <source
-                  src={video}
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div
-              style={{
-                // TODO
-                display: `none`,
-                // position: `absolute`,
-                // top: '100%',
-                // left: 0,
-                // width: '100%',
-                // height: '50%',
-                // transform: `
-                //   skewX(50deg)
-                // `,
-                // backgroundColor: `rgb(0 0 0 / 0.5)`,
-                // transformOrigin: `0 0`,
-              }}
-            >
-              <canvas
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox={`0 0 16 9`}
                 style={{
                   width: '100%',
                   height: '100%',
                 }}
               />
+              <div
+                style={{
+                  position: 'absolute',
+                  zIndex: 3,
+                  top: 0,
+                  left: 0,
+                  overflow: 'hidden',
+                }}
+              >
+                <video
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    display: 'block',
+                  }}
+                  muted
+                  autoPlay
+                  loop
+                  playsInline
+                >
+                  <source
+                    src={video}
+                    type="video/mp4"
+                  />
+                </video>
+              </div>
             </div>
           </div>
         ): null}
       </div>
 
-      <div
+      <a.div
         style={{
           position: 'relative',
+          zIndex: 3,
           width: '100%',
           maxWidth: '512px',
-          margin: '0 auto 5rem',
+          margin: '0 auto 2rem',
           padding: '0.25rem 0',
           lineHeight: 1.5,
+          overflow: 'hidden',
         }}
       >
         {comments
@@ -346,8 +320,7 @@ export default function Project(props) {
             </div>
           ): null
         }
-
-      </div>
+      </a.div>
     </div>
   );
 }

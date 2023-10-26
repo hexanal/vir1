@@ -2,11 +2,12 @@
 }
 
 .Home__heading {
-    position: absolute;
+    position: fixed;
     bottom: 1rem;
     left: 0;
     width: 100%;
     text-align: center;
+    overflow: hidden;
 }
 
 .Home__links {
@@ -34,6 +35,7 @@
 
 .HomeLink__prefix {
     position: absolute;
+    z-index: 3;
     left: 1rem;
     top: 50%;
     transform: translateY(-50%);
@@ -42,12 +44,14 @@
 }
 
 .HomeLink__symbol {
+    z-index: 3;
     position: relative;
     text-align: center;
 }
 
 .HomeLink__label {
     position: absolute;
+    z-index: 3;
     right: 1rem;
     top: 50%;
     transform: translateY(-50%);

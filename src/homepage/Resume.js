@@ -1,9 +1,10 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 import resume from "./fred_resume.json";
 import AsymSeparator from "./AsymSeparator";
 import Wave from "./symbols/Wave";
+import Diamond from "./Diamond";
 
 function Experience(props) {
   const {
@@ -13,12 +14,8 @@ function Experience(props) {
     location,
     url,
     description,
-    extra
+    mode, // null / "print"
   } = props;
-
-  useEffect( () => {
-    document.title = 'résumé';
-  }, []);
 
   return (
     <div
@@ -30,13 +27,20 @@ function Experience(props) {
         padding: '0.25rem 1rem',
       }}
     >
-      <h3>{title}</h3>
-      <h4
+      <h3
         style={{
           marginBottom: 0,
         }}
       >
         {company}
+      </h3>
+      <h4
+        style={{
+          marginTop: 0,
+          marginBottom: 0,
+        }}
+      >
+        {title}
       </h4>
 
       <div
@@ -63,7 +67,9 @@ function Experience(props) {
         ): null}
       </div>
 
-      <p>{description}</p>
+      {mode !== 'print' ? (
+        <p>{description}</p>
+      ): null}
     </div>
   );
 }
@@ -124,7 +130,13 @@ const types = {
   education: Education,
 };
 
-function Resume() {
+function Resume(props) {
+  const { mode = null } = useParams();
+
+  useEffect( () => {
+    document.title = 'résumé';
+  }, []);
+
   return <div
     style={{
       paddingBottom: '10rem',
@@ -136,14 +148,20 @@ function Resume() {
         textAlign: 'center',
       }}
     >
-      <p><small>Back to <Link to="/work">“work” page</Link> or <Link to="/">home page</Link>.</small></p>
-      <hr />
+      {mode !== 'print' ? (
+        <>
+          <p><small>Back to <Link to="/code">“code” page</Link> or <Link to="/">home page</Link>.</small></p>
+          <p><small>Also available as <Link to="/resume/print">printable version</Link> or <a href="/DOCUMENTS/fredmercy.pdf">PDF file</a>.</small></p>
+          <hr />
+        </>
+      ): null}
       <p><strong>Frederic Mercy</strong></p>
       <p><i>Frontend Web Developer / Other</i></p>
     </div>
 
     <h1
       style={{
+        display: mode === 'print' ? 'none' : 'block',
         position: 'fixed',
         top: 0,
         zIndex: -1,
@@ -162,15 +180,21 @@ function Resume() {
       }
 
       return (
-        <div key={id}>
+        <div
+          key={id}
+          style={{
+            breakBefore: id !== 'experience' ? 'page' : 'auto',
+          }}
+        >
           <Wave
             style={{
               display: 'block',
               margin: `0 auto`,
-              width: '6rem',
-              height: '5rem',
+              width: '4rem',
+              height: '3rem',
             }}
           />
+
           <h2
             style={{
               position: 'relative',
@@ -187,7 +211,7 @@ function Resume() {
             const { id } = item;
             return (
               <div key={id}>
-                <SectionComponent {...item} />
+                <SectionComponent {...item} mode={mode} />
               </div>
             );
           })}

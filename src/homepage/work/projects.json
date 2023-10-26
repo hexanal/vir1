@@ -1,7 +1,174 @@
 [
     {
-        "id": "alloprof",
-        "title": "Alloprof",
-        "description": "Some website"
+      "theme": {
+        "color": "rgb(255, 158, 199)"
+      },
+      "id": "nouveau-cinema",
+      "title": "Festival du Nouveau Cinema",
+      "year": 2021,
+      "agency": "Folklore",
+      "link": "https://nouveaucinema.ca",
+      "linkLabel": "nouveaucinema.ca",
+      "comments": [
+        {
+          "id": "ouch",
+          "content": "Perhaps the most challenging project I have worked on, the new Festival du Nouveau Cinéma website had me juggling many considerations:"
+        },
+        {
+          "id": "consid",
+          "content": "Making the micro-interactions as lively as possible while implementing an easily themeable design system."
+        },
+        {
+          "id": "edition",
+          "content": "This design system would allow for customization the “edition” of the festival being browsed."
+        },
+        {
+          "id": "integrations",
+          "content": "The interface connects to multiple APIs and other integrations."
+        },
+        {
+          "id": "respons",
+          "content": "It is also 100% responsive and as legible as possible on most form factors."
+        }
+      ],
+      "video": "/WORK/nouveau_cinema.mp4"
+    },
+    {
+      "theme": {
+        "color": "#8b8bff"
+      },
+      "id": "micromag",
+      "title": "Micromag",
+      "year": 2022,
+      "agency": "Folklore",
+      "link": "https://micromag.urbania.ca",
+      "linkLabel": "micromag.urbania.ca",
+      "comments": [
+        {
+          "id": "dynamic",
+          "content": "A very dynamic page which showcases URBANIA’s mobile-first magazine: “Micromag”"
+        },
+        {
+          "id": "floating",
+          "content": "What is inside the floating cellphone is the actual website: clicking the phone expands to a full-screen interactive experience."
+        },
+        {
+          "id": "motion",
+          "content": "Motions are triggered via scrolling position, and I tried to make transitions as smooth as possible to avoid jarring effects.'"
+        },
+        {
+          "id": "challenge",
+          "content": "It was quite the challenge!"
+        }
+      ],
+      "video": "/WORK/micromag.mp4"
+    },
+    {
+      "theme": {
+        "color": "yellow"
+      },
+      "id": "amnistie-internationale",
+      "title": "Amnistie Internationale",
+      "year": 2020,
+      "agency": "Cossette",
+      "link": "https://amnistie.ca",
+      "linkLabel": "amnistie.ca",
+      "comments": [
+        {
+          "id": "pride",
+          "content": "This one I am very proud of! It’s a very straightforward website, and very heavy on content, but I strove to make the designer’s vision come true."
+        },
+        {
+          "id": "legible",
+          "content": "As legible as possible, with some attention given to animations, especially to provide visual feedback."
+        },
+        {
+          "id": "documentation",
+          "content": "Much care was given to providing documentation and a sane codebase, so that the hand-off to the company that handles further development and maintenance went very smoothly."
+        }
+      ],
+      "video": "/WORK/amnistie.mp4"
+    },
+    {
+      "theme": {
+        "color": "lightblue"
+      },
+      "id": "universities-australia",
+      "title": "Universities Australia",
+      "year": 2018,
+      "agency": "ED.",
+      "link": "https://universitiesaustralia.edu.au",
+      "linkLabel": "universitiesaustralia.edu.au",
+      "comments": [
+        {
+          "id": "one",
+          "content": "With such a variety of content and page templates, this project demanded a rigorously maintained component system:"
+        },
+        {
+          "id": "two",
+          "content": "Pages with filterable, sortable lists, many carousels, a handcrafted Google Maps theme, shortcut cards, etc."
+        },
+        {
+          "id": "three",
+          "content": "Its design is to-the-point and favors legibility and consistency; subtle animations provide a smooth browsing experience."
+        }
+      ],
+      "video": "/WORK/universities_australia.mp4"
+    },
+    {
+      "theme": {
+        "color": "lightgreen"
+      },
+      "id": "alloprof",
+      "title": "Allôprof",
+      "year": 2019,
+      "agency": "Cossette",
+      "link": "https://alloprof.ca",
+      "linkLabel": "alloprof.ca",
+      "comments": [
+        {
+          "id": "role",
+          "content": "My role on this project was to work on animations and motion design."
+        },
+        {
+          "id": "particulars",
+          "content": "In particular: the homepage interactive “hero” banner, the transitions when navigating to a topic, and animating the little green mascot."
+        },
+        {
+          "id": "constraints",
+          "content": "Due to time and budget constraints, the scope of the work was later revised, which explains some quirks."
+        },
+        {
+          "id": "updates",
+          "content": "As of September 2023, some elements I implemented remain visible, however a lot of what I worked on has since been updated."
+        }
+      ],
+      "video": "/WORK/alloprof.mp4"
+    },
+    {
+      "theme": {
+        "color": "#b5b5b5"
+      },
+      "id": "copartnership",
+      "title": "Co—Partnership",
+      "year": 2018,
+      "agency": "ED.",
+      "link": "https://co-partnership.com",
+      "linkLabel": "co-partnership.com",
+      "comments": [
+        {
+          "id": "fun",
+          "content": "I had fun implementing the designer’s ideas on this one!"
+        },
+        {
+          "id": "particulars",
+          "content": "Because it was my first project with this team, I was still adapting to the toolset, yet I managed to ship it in time and with minimal technical debt."
+        },
+        {
+          "id": "constraints",
+          "content": "This website was recently redesigned; the current one was not implemented by me."
+        }
+      ],
+      "video": "/WORK/co_partnership.mp4"
     }
 ]

@@ -2,6 +2,7 @@ export default function Star(props) {
   const {
     style = {},
     stroke = `rgb(0 0 0 / 1)`,
+    strokeWidth = 3,
   } = props || {};
 
   return (
@@ -26,8 +27,8 @@ export default function Star(props) {
           C 50,50, 50,50, 50,100
           C 50,50, 50,50, 0,50
         `}
-        strokeWidth={3}
         vectorEffect="non-scaling-stroke"
+        strokeWidth={strokeWidth}
       />
     </svg>
   );

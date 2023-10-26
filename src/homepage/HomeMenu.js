@@ -9,20 +9,7 @@ import Wave from "./symbols/Wave";
 
 function HomeMenu() {
   const { pathname }  = useLocation();
-  console.log(pathname);
-  // if / => show all
-  // if /code => show only code
-  // if /art => show only art
-  // and so on
 
-  const pages = [
-    '/',
-    '/code',
-    '/art',
-    '/other',
-  ];
-
-  // position of menu
   const [{ weird }, weirdApi] = useSpring(
     () => ({
       weird: 0,
@@ -43,13 +30,11 @@ function HomeMenu() {
 
   useEffect( () => {
     if (pathname === '/') {
-      console.log('home, set menu to center');
       weirdApi.start({
         weird: 0,
       });
     }
-    if (pathname === '/code' || pathname === '/art' || pathname === '/other') {
-      console.log('code page, set menu to top, hide other links?');
+    if (pathname === '/code' || pathname === '/art' || pathname === '/art/' || pathname === '/other') {
       weirdApi.start({
         weird: 1,
       });
@@ -78,122 +63,43 @@ function HomeMenu() {
     >
       <HomeLink
         active={pathname === '/code' || pathname === '/'}
+        current={pathname === '/code'}
         to="/code"
         prefix="I"
-        symbol={(
-          <>
-            <Circle
-              style={{
-                width: '4rem',
-                height: '4rem',
-              }}
-            />
-            {/*
-            <Circle
-              stroke={`rgb(255 0 255 / 1)`}
-              style={{
-                position: 'absolute',
-                zIndex: -1,
-                top: 0,
-                left: '50%',
-                // transformOrigin: `center 0`,
-                transform: `
-                  translateX(-50%)
-                  scale(1.2)
-                `,
-                width: '4rem',
-                height: '4rem',
-                mixBlendMode: 'overlay',
-              }}
-            />
-            <Circle
-              stroke={`rgb(0 255 255 / 1)`}
-              style={{
-                position: 'absolute',
-                zIndex: -1,
-                top: 0,
-                left: '50%',
-                // transformOrigin: `center 0`,
-                transform: `
-                  translateX(-50%)
-                  scale(1.5)
-                `,
-                width: '4rem',
-                height: '4rem',
-                mixBlendMode: 'overlay',
-              }}
-            />
-            */}
-          </>
-        )}
+        symbol={Circle}
+        symbolStyle={{
+          width: '4rem',
+          height: '4rem',
+        }}
         label="code"
+        color={`rgb(255 0 255 / 1)`}
       />
 
       <HomeLink
-        active={pathname === '/art' || pathname === '/'}
+        active={pathname === '/art' || pathname === '/art/'  || pathname === '/'}
+        current={pathname === '/art' || pathname === '/art/' }
         to="/art"
         prefix="II"
-        symbol={(
-          <>
-            <Star
-              style={{
-                width: '10rem',
-                height: '5rem',
-              }}
-            />
-            {/*
-            <Star
-              stroke={`rgb(255 255 0 / 1)`}
-              style={{
-                position: 'absolute',
-                zIndex: -1,
-                top: 0,
-                left: '50%',
-                // transformOrigin: `center 0`,
-                transform: `
-                  translateX(-50%)
-                  scale(1.2)
-                `,
-                width: '10rem',
-                height: '5rem',
-                mixBlendMode: 'overlay',
-              }}
-            />
-            <Star
-              stroke={`rgb(100 255 50 / 1)`}
-              style={{
-                position: 'absolute',
-                zIndex: -1,
-                top: 0,
-                left: '50%',
-                // transformOrigin: `center 0`,
-                transform: `
-                  translateX(-50%)
-                  scale(1.5)
-                `,
-                width: '10rem',
-                height: '5rem',
-                mixBlendMode: 'overlay',
-              }}
-            />
-            */}
-          </>
-        )}
+        symbol={Star}
+        symbolStyle={{
+          width: '10rem',
+          height: '5rem',
+        }}
         label="art"
+        color={`rgb(0 255 255 / 1)`}
       />
       <HomeLink
         active={pathname === '/other' || pathname === '/'}
+        current={pathname === '/other'}
         to="/other"
         prefix="III"
-        symbol={(
-          <Wave
-            style={{
-              width: '6rem',
-              height: '5rem',
-            }}
-          />
-        )}
+        symbol={Wave}
+        symbolStyle={{
+          width: '6rem',
+          height: '5rem',
+        }}
         label="other"
+        color={`rgb(255 255 0 / 1)`}
       />
     </a.div>
   </div>

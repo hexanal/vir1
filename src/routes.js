@@ -60,26 +60,40 @@ import SvgD1 from './experiments/d/SvgD1';
 import Follow1 from './experiments/Follow1';
 
 import Home from './homepage/Home';
+import HomePage from './homepage/HomePage';
 import Resume from './homepage/Resume';
-import One from './homepage/One';
 import Space from './homepage/space/Space';
 import Gluub from './homepage/space/Gluub';
 import Work from './homepage/work/Work';
 import Art from './homepage/art/Art';
 import Other from './homepage/other/Other';
+import Now from './homepage/Now';
+import ProjectPage from './homepage/work/ProjectPage';
+import Exports from './homepage/exports/Exports';
 
 export const routes = [
   // HOMEPAGE WEBSITE
   { path: '/', element: <Home />,
     children: [
-      { path: 'resume', element: <Resume />, },
-      { path: 'code', element: <Work />, },
+      { path: '', element: <HomePage />, },
+      { path: 'EXPORTS', element: <Exports />, },
+      { path: 'resume', element: <Resume />,
+        children: [
+          { path: ':mode', element: <Resume />, },
+        ]
+      },
+      { path: 'code', element: <Work />,
+        // children: [
+        //   { path: ':projectId', element: <ProjectPage />, },
+        // ]
+      },
       { path: 'art', element: <Art />, },
       { path: 'other', element: <Other />, },
+      { path: 'now', element: <Now />, },
     ],
   },
   // { path: '/resume', element: <Resume />, },
-  { path: '/1', element: <One />, },
+  { path: '/code/:projectId', element: <ProjectPage />, },
   { path: '/space', element: <Space />, },
   { path: '/space/gluub', element: <Gluub />, },
 
