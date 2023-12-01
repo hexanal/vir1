@@ -31,6 +31,8 @@ import Beansies from './experiments/Beansies';
 import CoolBeans from './experiments/CoolBeans';
 import Cooler from './experiments/Cooler';
 import MoveThree from './experiments/MoveThree';
+import ThreeSpiral from './experiments/ThreeSpiral';
+import ThreeSpiral2 from './experiments/ThreeSpiral2';
 import Growing from './experiments/Growing';
 import GrowingTaller from './experiments/GrowingTaller';
 import TextTree from './experiments/TextTree';
@@ -43,6 +45,7 @@ import Wiggley from './experiments/Wiggley';
 import Cursoor from './experiments/Cursoor';
 import GPT from './experiments/three/GPT';
 import GPT2 from './experiments/three/GPT2';
+import Hands from './experiments/three/Hands';
 import PeeFiveOne from './experiments/p5/PeeFiveOne';
 import PeeFiveTwo from './experiments/p5/PeeFiveTwo';
 import PeeFiveThree from './experiments/p5/PeeFiveThree';
@@ -58,6 +61,7 @@ import CanvasPro from './experiments/CanvasPro';
 
 import SvgD1 from './experiments/d/SvgD1';
 import Follow1 from './experiments/Follow1';
+import BgPos from './experiments/BgPos';
 
 import Home from './homepage/Home';
 import HomePage from './homepage/HomePage';
@@ -68,8 +72,10 @@ import Work from './homepage/work/Work';
 import Art from './homepage/art/Art';
 import Other from './homepage/other/Other';
 import Now from './homepage/Now';
+import XmasCard2023 from './homepage/other/XmasCard2023';
 import ProjectPage from './homepage/work/ProjectPage';
 import Exports from './homepage/exports/Exports';
+import MarkdownContent from './homepage/MarkdownContent';
 
 export const routes = [
   // HOMEPAGE WEBSITE
@@ -77,6 +83,7 @@ export const routes = [
     children: [
       { path: '', element: <HomePage />, },
       { path: 'EXPORTS', element: <Exports />, },
+      { path: 'cv', element: <Resume lang="fr" /> },
       { path: 'resume', element: <Resume />,
         children: [
           { path: ':mode', element: <Resume />, },
@@ -90,6 +97,8 @@ export const routes = [
       { path: 'art', element: <Art />, },
       { path: 'other', element: <Other />, },
       { path: 'now', element: <Now />, },
+      { path: 'xmas-card-2023', element: <XmasCard2023 />, },
+      { path: 'scratchpad', element: <MarkdownContent />, },
     ],
   },
   // { path: '/resume', element: <Resume />, },
@@ -103,6 +112,7 @@ export const routes = [
   // EXPERIMENTS
   { path: '/x', element: <IndexPage />,
     children: [
+      { path: 'bgpos', element: <BgPos />, },
       { path: 'svgd1', element: <SvgD1 />, },
       { path: 'follow1', element: <Follow1 />, },
       { path: 'canvas-font', element: <CanvasFont />, },
@@ -138,6 +148,8 @@ export const routes = [
       { path: 'cool-beans', element: <CoolBeans />, },
       { path: 'cooler', element: <Cooler />, },
       { path: 'move-three', element: <MoveThree />, },
+      { path: 'three-spiral', element: <ThreeSpiral />, },
+      { path: 'three-spiral2', element: <ThreeSpiral2 />, },
       { path: 'again-controls', element: <AgainControls />, },
       { path: 'messy-controls', element: <MessyControls />, },
       { path: 'even-more-controls', element: <EvenMoreControls />, },
@@ -157,6 +169,7 @@ export const routes = [
       { path: 'p5/PeeFiveFour', element: <PeeFiveFour />, },
       { path: 'three/gpt', element: <GPT />, },
       { path: 'three/gpt2', element: <GPT2 />, },
+      { path: 'three/hands', element: <Hands />, },
     ]
   },
 ];

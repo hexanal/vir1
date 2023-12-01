@@ -5,6 +5,7 @@ import Diamond from "../Diamond";
 
 import useRaf from "../../hooks/useRaf";
 
+import HYPERCYCLING from './HYPERCYCLING.json';
 import LANDSCAPES from './LANDSCAPES.json';
 import BENDS from './BENDS.json';
 
@@ -44,6 +45,23 @@ function Art() {
 
         <Diamond />
 
+        <h2>HYPERCYCLING</h2>
+
+        <div
+          className=""
+        >
+          {HYPERCYCLING.map( (l, i) => {
+            const {
+              path,
+              filename,
+              file_size
+            } = l || {};
+            return (
+              <img key={path} src={path} alt={`HYPERCYCLING image series ${i}/${HYPERCYCLING.length}`} />
+            );
+          })}
+        </div>
+
         <h2>BENDS</h2>
 
         <div
@@ -56,7 +74,7 @@ function Art() {
               file_size
             } = l || {};
             return (
-              <img key={path} src={path} alt={`BENDS image series ${i}/${LANDSCAPES.length}`} />
+              <img key={path} src={path} alt={`BENDS image series ${i}/${BENDS.length}`} />
             );
           })}
         </div>

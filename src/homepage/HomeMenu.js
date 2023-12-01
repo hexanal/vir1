@@ -34,7 +34,13 @@ function HomeMenu() {
         weird: 0,
       });
     }
-    if (pathname === '/code' || pathname === '/art' || pathname === '/art/' || pathname === '/other') {
+    if (
+      pathname === '/code'
+      || pathname === '/art'
+      || pathname === '/art/'
+      || pathname === '/other'
+      || pathname === '/xmas-card-2023'
+    ) {
       weirdApi.start({
         weird: 1,
       });
@@ -62,7 +68,10 @@ function HomeMenu() {
       className="Home__links"
     >
       <HomeLink
-        active={pathname === '/code' || pathname === '/'}
+        active={
+          pathname === '/code'
+          || pathname === '/'
+        }
         current={pathname === '/code'}
         to="/code"
         prefix="I"
@@ -89,7 +98,10 @@ function HomeMenu() {
         color={`rgb(0 255 255 / 1)`}
       />
       <HomeLink
-        active={pathname === '/other' || pathname === '/'}
+        active={
+          pathname === '/other'
+          || pathname === '/'
+        }
         current={pathname === '/other'}
         to="/other"
         prefix="III"

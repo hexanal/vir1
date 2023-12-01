@@ -44,16 +44,18 @@ function Other() {
         <Diamond />
         <p>i am a <strong>web developer</strong></p>
         <p>i have been for <em>over 10 years</em></p>
-        <Diamond />
-        <p>since <strong>2023</strong>, i am trying something new</p>
         <p>the creative process and artistic considerations are at the focus of my interests</p>
-        <p>i wish to become a <strong>multimedia artist</strong></p>
-        <Diamond />
-        <p>the web is still one of my favorite medium of expression</p>
-        <p>i will use to showcase my <strong>creative</strong> sensibilities</p>
-        <Diamond />
+        <p>i wish to become some sort of <strong>multimedia artist</strong></p>
+        <Diamond size={5} />
+        <p>the web is still my favorite medium of expression</p>
+        <p>i will use it to showcase my <strong>creative</strong> sensibilities</p>
+        <Diamond size={7} />
+
         <p>this website might <strong>not</strong> be built to the highest standards</p>
-        <p>so be it</p>
+        <p style={{fontSize: '2rem' }}>so be it</p>
+
+        <Diamond size={15} />
+
       </div>
     </div>
 

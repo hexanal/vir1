@@ -40,7 +40,7 @@ function Point(props) {
 
 const POINTS = 128;
 
-export default function ThreeSpiral(props) {
+export default function ThreeSpiral2(props) {
   const {
     origin = [0.5, 0.5],
     color = `rgb(0 0 0 / 1)`,
@@ -82,15 +82,6 @@ export default function ThreeSpiral(props) {
       <ambientLight intensity={0.15} />
       <pointLight position={[10, 10, 10]} />
 
-      {points.map( p => {
-        const { id = 0 } = p || {};
-        return p;
-        // return (
-        //   <Fragment key={id}>
-        //     {p}
-        //   </Fragment>
-        // );
-      })}
     </Canvas>
   );
 };

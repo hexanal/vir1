@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 
 import resume from "./fred_resume.json";
+import resumeFrench from "./fred_cv.json";
 import AsymSeparator from "./AsymSeparator";
 import Wave from "./symbols/Wave";
 import Diamond from "./Diamond";
@@ -130,12 +131,21 @@ const types = {
   education: Education,
 };
 
+const __ = function(lang, strings) {
+  const yo = strings[lang];
+  return yo;
+}
+
 function Resume(props) {
+  const { lang = 'en' } = props || {};
   const { mode = null } = useParams();
 
   useEffect( () => {
-    document.title = 'résumé';
-  }, []);
+    document.title = __(lang, {
+      en: 'résumé',
+      fr: 'cv',
+    });
+  }, [lang]);
 
   return <div
     style={{
@@ -150,13 +160,32 @@ function Resume(props) {
     >
       {mode !== 'print' ? (
         <>
-          <p><small>Back to <Link to="/code">“code” page</Link> or <Link to="/">home page</Link>.</small></p>
-          <p><small>Also available as <Link to="/resume/print">printable version</Link> or <a href="/DOCUMENTS/fredmercy.pdf">PDF file</a>.</small></p>
+          {__(lang, {
+            en: <p><small>Back to <Link to="/code">“code” page</Link> or <Link to="/">home page</Link>.</small></p>,
+            fr: <p><small>Retour à la <Link to="/code">page “code”</Link> ou la <Link to="/">page d’accueil</Link>.</small></p>,
+          })}
+          {__(lang, {
+            en: <p><small>Also available as <Link to="/resume/print">printable version</Link> or <a href="/DOCUMENTS/fredmercy.pdf">PDF file</a>.</small></p>,
+            fr: <p><small>Aussi disponible en <Link to="/resume/print">version imprimable</Link> ou <a href="/DOCUMENTS/fredmercy.pdf">fichier PDF</a>.</small></p>,
+          })}
           <hr />
         </>
       ): null}
-      <p><strong>Frederic Mercy</strong></p>
-      <p><i>Frontend Web Developer / Other</i></p>
+
+      {__(lang, {
+        en: (
+          <>
+            <p><strong>Frederic Mercy</strong></p>
+            <p><i>Frontend Web Developer / Other</i></p>
+          </>
+        ),
+        fr: (
+          <>
+            <p><strong>Frédéric Mercy</strong></p>
+            <p><i>Développeur web frontend / Autre</i></p>
+          </>
+        ),
+      })}
     </div>
 
     <h1
@@ -171,7 +200,7 @@ function Resume(props) {
       résumé
     </h1>
 
-    {resume.map( section => {
+    {__(lang, {en: resume, fr: resumeFrench}).map( section => {
       const { id, heading, items } = section;
       const SectionComponent = types[id];
 
