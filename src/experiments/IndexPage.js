@@ -4,11 +4,10 @@ import PageLink from '../components/PageLink';
 
 export default function IndexPage(props) {
   const { pathname }  = useLocation();
-  const experiments = routes.filter(r => r.path === '/x');
 
   return (
     <div className="full">
-      { pathname === '/x' ? (
+      { pathname === '/' ? (
         <ul
           style={{
             position: 'relative',
@@ -20,7 +19,7 @@ export default function IndexPage(props) {
             height: '100%',
           }}
         >
-          {experiments.map(PageLink)}
+          {routes.map(PageLink)}
         </ul>
       ) : null}
 

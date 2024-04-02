@@ -6,7 +6,11 @@ import Logger from '../components/viz/Logger';
 
 import MESSAGES from '../config';
 
-const { OBS_MESSAGE } = MESSAGES;
+const {
+  OBS_MESSAGE,
+  OBS_SOCIAL,
+  PLEASE_WAIT,
+ } = MESSAGES;
 
 function Boom(props) {
   const {
@@ -60,7 +64,7 @@ export default function DateTime(props) {
     YEAR_FORMAT,
     FONT_FAMILY,
     LOWERCASE,
-    MESSAGE,
+    SOCIAL,
   } = useControls({
     LOWERCASE: true,
     FONT_FAMILY: {
@@ -119,10 +123,11 @@ export default function DateTime(props) {
         '2-digit',
       ],
     },
-    MESSAGE: OBS_MESSAGE || '—',
+    SOCIAL: OBS_SOCIAL || '—',
   });
 
   const { t, t0, elapsed }  = useRaf();
+  const isUIVisible = useRef(true);
 
   const date = new Date(t);
   const year = date.getYear();
@@ -152,6 +157,11 @@ export default function DateTime(props) {
     }
   }, [keys, setControlsHidden]);
 
+  const alpha = useRef(0);
+  useEffect(() => {
+    alpha.current = 0.1 + Math.sin(t * 0.001) * 0.1;
+  }, [t]);
+
   return (
     <div
       className=""
@@ -171,6 +181,7 @@ export default function DateTime(props) {
         hidden={controlsHidden} // default = false, when true the GUI is hidden
       />
 
+      {isUIVisible.current ? (
       <Boom
         fontSize={FONT_SIZE * 0.8}
         fontColor={FONT_COLOR}
@@ -179,11 +190,12 @@ export default function DateTime(props) {
           bottom: '3.25rem',
           right: '1rem',
           transform: 'rotate(2deg)',
-          textTransform: LOWERCASE ? 'lowercase' : 'none'
+          textTransform: LOWERCASE ? 'lowercase' : 'none',
         }}
       >
         {timestring}
       </Boom>
+      ): null}
 
       <Boom
         fontSize={FONT_SIZE}
@@ -196,6 +208,37 @@ export default function DateTime(props) {
         {datestring}
       </Boom>
 
+      
+      { PLEASE_WAIT ? (
+      <Boom
+        fontSize={FONT_SIZE * 3}
+        fontColor={FONT_COLOR}
+        bgColor={BG_COLOR}
+        style={{
+          top: '50%',
+          left: '50%',
+          transform: `translate(-50%, -50%)`,
+          textAlign: 'center',
+        }}
+      >
+        I'LL BE RIGHT BACK
+      </Boom>
+      ): null}
+
+      
+      <Boom
+        fontSize={FONT_SIZE * 0.7}
+        fontColor={FONT_COLOR}
+        bgColor={BG_COLOR}
+        style={{
+          bottom: '3rem',
+          left: 0,
+          right: 'auto',
+          letterSpacing: `${alpha.current}rem`,
+        }}
+      >
+        {OBS_MESSAGE}
+      </Boom>
       <Boom
         fontSize={FONT_SIZE * 0.7}
         fontColor={FONT_COLOR}
@@ -203,10 +246,10 @@ export default function DateTime(props) {
         style={{
           left: 0,
           right: 'auto',
-          textTransform: LOWERCASE ? 'lowercase' : 'none'
+          textTransform: LOWERCASE ? 'lowercase' : 'none',
         }}
       >
-        {MESSAGE}
+        {SOCIAL}
       </Boom>
     </div>
   );

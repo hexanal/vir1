@@ -63,54 +63,12 @@ import SvgD1 from './experiments/d/SvgD1';
 import Follow1 from './experiments/Follow1';
 import BgPos from './experiments/BgPos';
 
-import Home from './homepage/Home';
-import HomePage from './homepage/HomePage';
-import Resume from './homepage/Resume';
-import Space from './homepage/space/Space';
-import Gluub from './homepage/space/Gluub';
-import Work from './homepage/work/Work';
-import Art from './homepage/art/Art';
-import Other from './homepage/other/Other';
-import Now from './homepage/Now';
-import XmasCard2023 from './homepage/other/XmasCard2023';
-import ProjectPage from './homepage/work/ProjectPage';
-import Exports from './homepage/exports/Exports';
-import MarkdownContent from './homepage/MarkdownContent';
-
 export const routes = [
-  // HOMEPAGE WEBSITE
-  { path: '/', element: <Home />,
-    children: [
-      { path: '', element: <HomePage />, },
-      { path: 'EXPORTS', element: <Exports />, },
-      { path: 'cv', element: <Resume lang="fr" /> },
-      { path: 'resume', element: <Resume />,
-        children: [
-          { path: ':mode', element: <Resume />, },
-        ]
-      },
-      { path: 'code', element: <Work />,
-        // children: [
-        //   { path: ':projectId', element: <ProjectPage />, },
-        // ]
-      },
-      { path: 'art', element: <Art />, },
-      { path: 'other', element: <Other />, },
-      { path: 'now', element: <Now />, },
-      { path: 'xmas-card-2023', element: <XmasCard2023 />, },
-      { path: 'scratchpad', element: <MarkdownContent />, },
-    ],
-  },
-  // { path: '/resume', element: <Resume />, },
-  { path: '/code/:projectId', element: <ProjectPage />, },
-  { path: '/space', element: <Space />, },
-  { path: '/space/gluub', element: <Gluub />, },
-
   // RANDOM ROOT LINKS
   { path: 'datetime', element: <DateTime />, },
 
   // EXPERIMENTS
-  { path: '/x', element: <IndexPage />,
+  { path: '/', element: <IndexPage />,
     children: [
       { path: 'bgpos', element: <BgPos />, },
       { path: 'svgd1', element: <SvgD1 />, },
